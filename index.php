@@ -17,7 +17,7 @@ if (isset ($_COOKIE['azure_account'])) {
     <body>
         <div id="master">
             
-            <form name="signin" action="/azureblob/browse.php" method="post">
+            <form name="signin" action="/browse.php" method="post">
                 <dl id="azure_account_details">
                     <dt><label for="account_name">Account name:</label></dt>
                     <dd><input type="text" name="account_name" id="account_name" value="<?php echo (isset ($_SESSION['azure_account']['account_name']) ? $_SESSION['azure_account']['account_name'] : null) ?>"></dd>

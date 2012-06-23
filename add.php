@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php
 if (!isset ($_SESSION['azure_account']['account_name'])|| !isset ($_SESSION['azure_account']['account_key'])) {
-    header('Location: /azureblob');
+    header('Location: /');
 }
 ?>
 
@@ -20,7 +20,7 @@ if (!isset ($_SESSION['azure_account']['account_name'])|| !isset ($_SESSION['azu
             
             <?php if (!isset ($_FILES['blob'])): ?>
             
-                <form name="file_uploader" action="/azureblob/add.php" enctype="multipart/form-data" method="post">
+                <form name="file_uploader" action="/add.php" enctype="multipart/form-data" method="post">
 
                     <input type="file" name="blob">
                     <input type="submit" value="Upload">
@@ -36,7 +36,7 @@ if (!isset ($_SESSION['azure_account']['account_name'])|| !isset ($_SESSION['azu
                 require_once 'lib/AzureBlob.php';
                 $azureBlob = new AzureBlob($_SESSION['azure_account']['account_name'], $_SESSION['azure_account']['account_key'], $_SESSION['azure_account']['account_uri']);
                 if ($azureBlob->addBlob('plopstore', $name, $contents)) {
-                    echo '<script type="text/javascript">document.location.href=\'/azureblob/browse.php\';</script>';
+                    echo '<script type="text/javascript">document.location.href=\'/browse.php\';</script>';
                 }
             ?>
             

@@ -218,4 +218,27 @@ class AzureBlob
         }
         return $success;
     }
+    /**
+     * Retrieves a list of containers
+     * 
+     * @return WindowsAzure\Blob\Models\ListContainersResult
+     */
+    public function listContainers()
+    {
+        // Create blob REST proxy
+        $blobRestProxy = BlobService::create($this->_config);
+        $containers = array ();
+        
+        try {
+            $containers = $blobRestProxy->listContainers();
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code.": ".$error_message."<br />";
+        }
+        return $containers;
+    }
 }

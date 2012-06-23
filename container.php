@@ -1,10 +1,6 @@
 <?php
-
-var_dump($_SESSION);
-die;
-
-$_SESSION['azure_container']['container'] = null;
+session_start();
 if (isset ($_POST['container'])) {
     $_SESSION['azure_container']['container'] = $_POST['container'];
 }
-header('Location: /azureblob/browse.php');
+header('Location: /browse.php');

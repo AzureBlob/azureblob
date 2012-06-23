@@ -2,7 +2,7 @@
 <?php
 
 if (!isset ($_SESSION['azure_account']['account_name'])|| !isset ($_SESSION['azure_account']['account_key'])) {
-    header('Location: /azureblob');
+    header('Location: /');
 }
 
 $container = 'plopstore';
@@ -11,7 +11,7 @@ $blobName = urldecode($_GET['filename']);
 require_once 'lib/AzureBlob.php';
 $azureBlob = new AzureBlob($_SESSION['azure_account']['account_name'], $_SESSION['azure_account']['account_key'], $_SESSION['azure_account']['account_uri']);
 if ($azureBlob->removeBlob($container, $blobName)) {
-    header('Location: /azureblob/browse.php');
+    header('Location: /browse.php');
 }
 /*
 require_once 'WindowsAzure/WindowsAzure.php';
@@ -31,7 +31,7 @@ $blobRestProxy = BlobService::create($config);
 try {
     // Delete container.
     $blobRestProxy->deleteBlob($_SESSION['azure_container']['container'], $blob);
-    header('Location: /azureblob/browse.php');
+    header('Location: /browse.php');
 }
 catch(ServiceException $e){
     // Handle exception based on error codes and messages.

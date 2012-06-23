@@ -12,7 +12,7 @@
     <body>
         <div id="master">
             
-            <div style="text-align: right;"><a href="/azureblob/logout.php">Logout</a></div>
+            <div style="text-align: right;"><a href="/logout.php">Logout</a></div>
             
             <?php 
                 if(!empty ($_POST)) {
@@ -25,21 +25,29 @@
             ?>
             <?php if (!isset ($_SESSION['azure_account']['account_name']) || !isset ($_SESSION['azure_account']['account_key'])): ?> 
             
-                <div class="warning">Missing account name or key. <a href="/azureblob/index.php">Please try again</a>.</div>
+                <div class="warning">Missing account name or key. <a href="/index.php">Please try again</a>.</div>
                 
             <?php else: ?>
             
                 <?php
                     require_once 'lib/AzureBlob.php';
-                    $container = 'plopstore';
                     $azureBlob = new AzureBlob($_SESSION['azure_account']['account_name'], $_SESSION['azure_account']['account_key'], $_SESSION['azure_account']['account_uri']);
-                    $blobs = $azureBlob->listBlobs($container);
+                    $containers = $azureBlob->listContainers();
+                    
+                    $test = $containers->getContainers();
+                    $default = $test[0]->getName();
+                    $blobs = $azureBlob->listBlobs($default);
+                    $_SESSION['azure_container']['container'] = $default;
                 ?>
 
                 
-                <form action="/azureblob/container.php" method="post">
+                <form action="/container.php" method="post">
                     <label for="container">Container</label>:
-                    <input type="text" name="container" id="container" value="<?php echo $container ?>">
+                    <select name="container" id="container">
+                        <?php foreach ($containers->getContainers() as $container): ?>
+                        <option value="<?php echo $container->getName() ?>"><?php echo $container->getName() ?></option>
+                        <?php endforeach; ?>
+                    </select>
                     <input type="submit" value="switch">
                 </form>
                 
@@ -52,7 +60,7 @@
                     <table>
 
                         <tr>
-                            <th>Name</th><th>URL</th><th>Mime-type</th><th>Last modified</th><th><a href="/azureblob/add.php">+</a></th>
+                            <th>Name</th><th>URL</th><th>Mime-type</th><th>Last modified</th><th><a href="/add.php">+</a></th>
                         </tr>
 
                     <?php foreach ($blobs as $blob): ?>
@@ -62,7 +70,7 @@
                             <td><a href="<?php echo $blob->getUrl() ?>"><?php echo $blob->getUrl() ?></a></td>
                             <td><?php echo $blob->getProperties()->getContentType() ?></td>
                             <td><?php echo $blob->getProperties()->getLastModified()->format('r'); ?></td>
-                            <td><a href="/azureblob/del.php?filename=<?php echo urlencode($blob->getName()) ?>">x</a></td>
+                            <td><a href="/del.php?filename=<?php echo urlencode($blob->getName()) ?>">x</a></td>
                         </tr>
 
                     <?php endforeach; ?>
