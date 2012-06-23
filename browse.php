@@ -1,13 +1,4 @@
 <?php session_start(); ?>
-<?php
-require_once 'WindowsAzure/WindowsAzure.php';
-
-use WindowsAzure\Common\Configuration;
-use WindowsAzure\Blob\BlobSettings;
-
-use WindowsAzure\Blob\BlobService;
-use WindowsAzure\Common\ServiceException;
-?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
@@ -39,33 +30,19 @@ use WindowsAzure\Common\ServiceException;
             <?php else: ?>
             
                 <?php
-                    
-                    $config = new Configuration();
-                    $config->setProperty(BlobSettings::ACCOUNT_NAME, $_SESSION['azure_account']['account_name']);
-                    $config->setProperty(BlobSettings::ACCOUNT_KEY, $_SESSION['azure_account']['account_key']);
-                    $config->setProperty(BlobSettings::URI, $_SESSION['azure_account']['account_uri']);
-
-                    // Create blob REST proxy.
-                    $blobRestProxy = BlobService::create($config);
-
-                    $blobs = array ();
-
-                    try {
-                        // List blobs.
-                        $blob_list = $blobRestProxy->listBlobs("plopstore");
-                        $blobs = $blob_list->getBlobs();
-
-                    }
-                    catch(ServiceException $e){
-                        // Handle exception based on error codes and messages.
-                        // Error codes and messages are here: 
-                        // http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
-                        $code = $e->getCode();
-                        $error_message = $e->getMessage();
-                        echo $code.": ".$error_message."<br />";
-                    }
+                    require_once 'lib/AzureBlob.php';
+                    $container = 'plopstore';
+                    $azureBlob = new AzureBlob($_SESSION['azure_account']['account_name'], $_SESSION['azure_account']['account_key'], $_SESSION['azure_account']['account_uri']);
+                    $blobs = $azureBlob->listBlobs($container);
                 ?>
 
+                
+                <form action="/azureblob/container.php" method="post">
+                    <label for="container">Container</label>:
+                    <input type="text" name="container" id="container" value="<?php echo $container ?>">
+                    <input type="submit" value="switch">
+                </form>
+                
                 <?php if (empty ($blobs)): ?>
 
                     <p>No files currently stored here.</p>
