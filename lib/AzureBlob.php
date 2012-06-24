@@ -17,6 +17,8 @@
 require_once 'WindowsAzure/WindowsAzure.php';
 
 use WindowsAzure\Common\Configuration;
+use WindowsAzure\Blob\Models\CreateContainerOptions;
+use WindowsAzure\Blob\Models\PublicAccessType;
 use WindowsAzure\Blob\BlobSettings;
 use WindowsAzure\Blob\BlobService;
 use WindowsAzure\Common\ServiceException;
@@ -240,5 +242,86 @@ class AzureBlob
             echo $code.": ".$error_message."<br />";
         }
         return $containers;
+    }
+    /**
+     * Creates a new Windows Azure Blob Storage Container
+     * 
+     * @param string $label The label you want to give this container
+     * @param string $accessType Access public or private for blob or conainer
+     * @param null|array $metaData Extra meta data you want to provide
+     * @return boolean 
+     */
+    public function createContainer($label, $accessType = PublicAccessType::NONE, $metaData = null)
+    {
+        // Create blob REST proxy.
+        $blobRestProxy = BlobService::create($this->_config);
+
+        // OPTIONAL: Set public access policy and metadata.
+        // Create container options object.
+        $createContainerOptions = new CreateContainerOptions(); 
+
+        // Set public access policy. Possible values are 
+        // PublicAccessType::CONTAINER_AND_BLOBS and PublicAccessType::BLOBS_ONLY.
+        // CONTAINER_AND_BLOBS:     
+        // Specifies full public read access for container and blob data.
+        // proxys can enumerate blobs within the container via anonymous 
+        // request, but cannot enumerate containers within the storage account.
+        //
+        // BLOBS_ONLY:
+        // Specifies public read access for blobs. Blob data within this 
+        // container can be read via anonymous request, but container data is not 
+        // available. proxys cannot enumerate blobs within the container via 
+        // anonymous request.
+        // If this value is not specified in the request, container data is 
+        // private to the account owner.
+        $createContainerOptions->setPublicAccess($accessType);
+
+        // Set container metadata
+        if (null !== $metaData && is_array($metaData)) {
+            foreach ($metaData as $key => $value) {
+                $createContainerOptions->addMetaData($key, $value);
+            }
+        }
+        
+        $success = false;
+        try {
+            // Create container.
+            $blobRestProxy->createContainer($label, $createContainerOptions);
+            $success = true;
+        }
+        catch(ServiceException $e){
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code.": ".$error_message."<br />";
+        }
+        return $success;
+    }
+    /**
+     * Removes a container and everything in it
+     * 
+     * @param string $container
+     * @return boolean 
+     */
+    public function removeContainer($container)
+    {
+        // Create blob REST proxy.
+        $blobRestProxy = BlobService::create($this->_config);
+        
+        $success = false;
+        try {
+            $blobRestProxy->deleteContainer($container);
+            $success = true;
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code.": ".$error_message."<br />";
+        }
+        return $success;
     }
 }

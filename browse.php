@@ -36,8 +36,13 @@
                     
                     $test = $containers->getContainers();
                     $default = $test[0]->getName();
-                    $blobs = $azureBlob->listBlobs($default);
-                    $_SESSION['azure_container']['container'] = $default;
+                    $blobs = array ();
+                    if (!isset ($_SESSION['azure_container']) || !isset ($_SESSION['azure_container']['container'])) {
+                        $blobs = $azureBlob->listBlobs($default);
+                        $_SESSION['azure_container']['container'] = $default;
+                    } else {
+                        $blobs = $azureBlob->listBlobs($_SESSION['azure_container']['container']);
+                    }
                 ?>
 
                 
@@ -45,15 +50,28 @@
                     <label for="container">Container</label>:
                     <select name="container" id="container">
                         <?php foreach ($containers->getContainers() as $container): ?>
-                        <option value="<?php echo $container->getName() ?>"><?php echo $container->getName() ?></option>
+                        <option value="<?php echo $container->getName() ?>" <?php echo ($container->getName() === $_SESSION['azure_container']['container'] ? 'selected="selected"' : null) ?>><?php echo $container->getName() ?></option>
                         <?php endforeach; ?>
                     </select>
                     <input type="submit" value="switch">
+                    <a href="/remove.php" onClick="return confirm('This will remove current container [<?php echo $_SESSION['azure_container']['container'] ?>] and all objects in it. Do you want to continue?');">Remove current container</a>
+                </form>
+                
+                <form action="/create.php" method="post">
+                    <label for="label">Label for new container</label>:
+                    <input type="text" name="label" id="label" value="">
+                    <label for="accessType">Access type</label>:
+                    <select name="accessType" id="accessType">
+                        <option value="0">Private</option>
+                        <option value="1">Public on blob</option>
+                        <option value="2">Public on container</option>
+                    </select>
+                    <input type="submit" value="create">
                 </form>
                 
                 <?php if (empty ($blobs)): ?>
 
-                    <p>No files currently stored here.</p>
+                <p>No files currently stored here. <a href="/add.php">Add one right now.</a></p>
 
                 <?php else: ?>
 
