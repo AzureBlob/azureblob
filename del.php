@@ -5,7 +5,7 @@ if (!isset ($_SESSION['azure_account']['account_name'])|| !isset ($_SESSION['azu
     header('Location: /');
 }
 
-$container = 'plopstore';
+$container = $_SESSION['azure_container']['container'];
 $blobName = urldecode($_GET['filename']);
 
 require_once 'lib/AzureBlob.php';

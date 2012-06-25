@@ -1,0 +1,62 @@
+* { margin: 0; padding: 0; font-family: "Segoe UI",Tahoma,Verdana,Arial; }
+
+body { text-align: center; }
+
+#master { text-align: left; margin: 0 auto 0 auto; }
+#header { height: 50px; }
+#middle { margin-top: 50px; min-height: 500px; }
+#footer { text-align: center; margin-top: 15px; }
+
+a { color: #6190aa; }
+a:hover { color: #2086bf; }
+
+div.clear { font-size: 0; clear: both; }
+
+
+/** once logged in **/
+#mgmtBar { background: #323232; }
+#header.accountHeader { background: #323232; }
+div.logo { width: 500px; float: left; margin-left: 15px; }
+div.logo a { color: white; text-decoration: none; font-weight: bold; }
+div.navigation { width: 500px; float: right; text-align: right; margin-right: 15px; }
+div.navigation a { color: white; text-decoration: none; }
+
+div.manageLeft { float: left; margin-left: 15px; }
+div.manageRight { float: right; margin-right: 15px; }
+
+table#blobobjects { margin-bottom: 50px; width: 95%; margin: 0 auto; border-collapse: collapse; border: none;}
+tr.title th { background: #323232; color: white; padding: 2px 5px;}
+tr.title th a { color: #2086bf; text-decoration: none; }
+tr.title th a:hover { color: #509ed8; text-decoration: none; }
+td { font-size: small; padding: 2px 5px; }
+tr.odd td { background: #e1f3fb;}
+tr.odd td a { color: #2086bf; text-decoration: none; }
+tr.odd td a:hover { color: #509ed8; text-decoration: none; }
+tr.even td a { text-decoration: none; }
+
+/** file upload tool **/
+div#center { text-align: center; }
+div#splash { margin: 0 auto; width: 1000px;}
+div.product {
+    background: url("http://plopster.blob.core.windows.net/plopstore/boysgarden_500x400.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    font-family: "Segoe UI","Helvetica",Garuda,Arial,sans-serif;
+    font-weight: 100;
+    height: 400px;
+    position: relative;
+    width: 500px;
+    float: left;
+}
+div.fileLoader {
+    text-align: left;
+    width: 400px; 
+    min-height: 400px;
+    border: 1px solid #99a4b0; 
+    padding: 0 20px; 
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+    margin-left: 10px;
+    float: left;
+}

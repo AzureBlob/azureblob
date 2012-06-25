@@ -12,25 +12,47 @@ if (isset ($_COOKIE['azure_account'])) {
         <meta name="Description" content="A simple interface to browse and 
               manage files on Windows Azure">
         <meta name="Keywords" content="windows azure blob storage browse manage">
+        <link rel="StyleSheet" href="/style.css">
     </head>
     
     <body>
         <div id="master">
             
-            <form name="signin" action="/browse.php" method="post">
-                <dl id="azure_account_details">
-                    <dt><label for="account_name">Account name:</label></dt>
-                    <dd><input type="text" name="account_name" id="account_name" value="<?php echo (isset ($_SESSION['azure_account']['account_name']) ? $_SESSION['azure_account']['account_name'] : null) ?>"></dd>
-                    <dt><label for="account_key">Primary key:</label></dt>
-                    <dd><input type="text" name="account_key" id="account_key" value="<?php echo (isset ($_SESSION['azure_account']['account_key']) ? $_SESSION['azure_account']['account_key'] : null) ?>"></dd>
-                    <dt><label for="account_uri">Storage URI:</label></dt>
-                    <dd><input type="text" name="account_uri" id="account_key" value="<?php echo (isset ($_SESSION['azure_account']['account_uri']) ? $_SESSION['azure_account']['account_uri'] : null) ?>"></dd>
-                    <dt><label for="remember_me">Remember me:</label></dt>
-                    <dd><input type="checkbox" name="remember_me" id="remember_me" value="1" <?php echo (isset ($_COOKIE['azure_account']) ? 'checked="checked"' : null) ?>></dd>
-                    <dt>&nbsp;</dt>
-                    <dd><input type="submit" value="Browse"></dd>
-                </dl>
-            </form>
+            <div id="header"><h1>Windows Azure Blob Storage browser</h1></div>
+            
+            <div id="middle">
+                
+                <div class="product">&nbsp;</div>
+                
+                <div class="form">
+                    <h1>Sign in</h1>
+                    <form id="WindowsAzureAccount" name="signin" action="/browse.php" method="post">
+                        <dl id="azure_account_details">
+                            <dt><label for="account_name">Account name:</label></dt>
+                            <dd><input type="text" name="account_name" id="account_name" value="<?php echo (isset ($_SESSION['azure_account']['account_name']) ? $_SESSION['azure_account']['account_name'] : null) ?>"></dd>
+                            <dt><label for="account_key">Primary key:</label></dt>
+                            <dd><input type="text" name="account_key" id="account_key" value="<?php echo (isset ($_SESSION['azure_account']['account_key']) ? $_SESSION['azure_account']['account_key'] : null) ?>"></dd>
+                            <dt><label for="account_uri">Storage URI:</label></dt>
+                            <dd><input type="text" name="account_uri" id="account_key" value="<?php echo (isset ($_SESSION['azure_account']['account_uri']) ? $_SESSION['azure_account']['account_uri'] : null) ?>"></dd>
+                            <dt><label for="remember_me">Remember me:</label></dt>
+                            <dd><input type="checkbox" name="remember_me" id="remember_me" value="1" <?php echo (isset ($_COOKIE['azure_account']) ? 'checked="checked"' : null) ?>></dd>
+                            <dt>&nbsp;</dt>
+                            <dd><input type="submit" value="Sign in"></dd>
+                        </dl>
+                    </form>
+                </div>
+                <div class="clear">&nbsp;</div>
+            </div>
+            
+            <div id="footer">
+                <p>This online tool is not part of the <a href="http://www.windowsazure.com" 
+                title="Windows Azure hosting solutions">Windows Azure</a> platform.</p>
+                <p>Fork us on <a href="https://github.com/PHPBenelux/azureblob" title="Fork us on GitHub">GitHub</a> or read
+                    <a href="http://dragonbe.azurewebsites.net" title="DragonBe in the cloud">DragonBe's cloud blog</a>.</p>
+                <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.<br><br>
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a></p>
+            </div>
+            
             
         </div>
     </body>
