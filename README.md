@@ -19,3 +19,5 @@ The following resources have been followed to achieve this application
 * **Blob Storage Howto:** https://www.windowsazure.com/en-us/develop/php/how-to-guides/blob-service/
 * **Windows Azure Error Codes:** http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
 * **Blob Storage Container ACL:** http://msdn.microsoft.com/en-us/library/windowsazure/dd179391.aspx
+
+You can now test-drive this Windows Azure Blob Storage browser tool yourself at http://azureblob.phpdev.nu.
