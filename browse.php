@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<?php set_include_path(__DIR__ . DIRECTORY_SEPARATOR . 'lib' . PATH_SEPARATOR . get_include_path()); ?>
 <?php 
     if(!empty ($_POST)) {
         if (isset ($_POST['remember_me'])) {
