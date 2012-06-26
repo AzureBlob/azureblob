@@ -19,6 +19,7 @@ require_once 'WindowsAzure/WindowsAzure.php';
 use WindowsAzure\Common\Configuration;
 use WindowsAzure\Blob\Models\CreateContainerOptions;
 use WindowsAzure\Blob\Models\PublicAccessType;
+use WindowsAzure\Blob\Models\CreateBlobOptions;
 use WindowsAzure\Blob\BlobSettings;
 use WindowsAzure\Blob\BlobService;
 use WindowsAzure\Common\ServiceException;
@@ -166,9 +167,10 @@ class AzureBlob
      * @param string $container
      * @param string $blobName
      * @param stream $blobContents
-     * @return boolean 
+     * @param null|array $options
+     * @return boolean
      */
-    public function addBlob($container, $blobName, $blobContents)
+    public function addBlob($container, $blobName, $blobContents, $options = null)
     {
         // Create blob REST proxy.
         $blobRestProxy = BlobService::create($this->_config);
@@ -178,9 +180,15 @@ class AzureBlob
         
         // Let's fail first until we succeed in uploading the blob
         $success = false;
+        $blobOptions = null;
+        if (null !== $options) {
+            $blobOptions = new CreateBlobOptions;
+            $blobOptions->setContentType($options['content-type']);
+            $blobOptions->setBlobContentType($options['content-type']);
+        }
         try {
             //Upload blob
-            $blobRestProxy->createBlockBlob($container, $blobName, $blobContents);
+            $blobRestProxy->createBlockBlob($container, $blobName, $blobContents, $blobOptions);
             $success = true;
         } catch(ServiceException $e){
             // Handle exception based on error codes and messages.

@@ -1,16 +1,19 @@
 <?php session_start(); ?>
 <?php
+require_once 'WindowsAzure/WindowsAzure.php';
+use WindowsAzure\Common\Internal\Resources;
 if (!isset ($_SESSION['azure_account']['account_name'])|| !isset ($_SESSION['azure_account']['account_key'])) {
     header('Location: /');
 }
 if (isset ($_FILES['blob'])) {
     $contents = file_get_contents($_FILES['blob']['tmp_name']);
     $name = $_FILES['blob']['name'];
+    $mimeType = (isset ($_POST['mimeType']) ? $_POST['mimeType'] : Resources::BINARY_FILE_TYPE);
 
     require_once 'lib/AzureBlob.php';
     $azureBlob = new AzureBlob($_SESSION['azure_account']['account_name'], $_SESSION['azure_account']['account_key'], $_SESSION['azure_account']['account_uri']);
     $container = $_SESSION['azure_container']['container'];
-    if ($azureBlob->addBlob($container, $name, $contents)) {
+    if ($azureBlob->addBlob($container, $name, $contents, array ('content-type' => $mimeType))) {
         header('Location: /browse.php');
     }
                         
@@ -49,6 +52,19 @@ if (isset ($_FILES['blob'])) {
                             <form name="file_uploader" action="/add.php" enctype="multipart/form-data" method="post">
 
                                 <input type="file" name="blob">
+                                <select name="mimeType" id="mimeType">
+                                    <option value="application/octed-stream">Binary</option>
+                                    <option value="text/plain">Text</option>
+                                    <option value="image/png">PNG</option>
+                                    <option value="image/jpg">JPG/JPEG</option>
+                                    <option value="video/m4v">m4v Video</option>
+                                    <option value="video/quicktime">Quicktime</option>
+                                    <option value="application/vnd.ms-powerpoint">Microsoft PowerPoint</option>
+                                    <option value="application/vnd.ms-excel">Microsoft Excel</option>
+                                    <option value="application/msword">Microsoft Word</option>
+                                    <option value="application/x-iwork-keynote-sffkey">Apple Keynote</option>
+                                    <option value="application/pdf">Acrobat PDF</option>
+                                </select>
                                 <input type="submit" value="Upload">
 
                             </form>
