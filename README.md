@@ -20,4 +20,5 @@ The following resources have been followed to achieve this application
 * **Windows Azure Error Codes:** http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
 * **Blob Storage Container ACL:** http://msdn.microsoft.com/en-us/library/windowsazure/dd179391.aspx
 
+It uses the [[https://github.com/WindowsAzure/azure-sdk-for-php|Windows Azure SDK for PHP]] and some PEAR packages. See https://github.com/WindowsAzure/azure-sdk-for-php for more information.
 You can now test-drive this Windows Azure Blob Storage browser tool yourself at http://azureblob.phpdev.nu.
