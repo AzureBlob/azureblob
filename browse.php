@@ -1,6 +1,11 @@
 <?php session_start(); ?>
 <?php set_include_path(__DIR__ . DIRECTORY_SEPARATOR . 'lib' . PATH_SEPARATOR . get_include_path()); ?>
 <?php 
+	ini_set('error_log', './phperror.log');
+	ini_set('error_reporting', true);
+	ini_set('display_errors', true);
+?>
+<?php 
     if(!empty ($_POST)) {
         if (isset ($_POST['remember_me'])) {
             unset ($_POST['remember_me']);
