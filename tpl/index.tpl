@@ -34,6 +34,14 @@
                             <dd><input type="submit" value="Sign in"></dd>
                         </dl>
                     </form>
+					<h2>Privacy</h2>
+					<p>You're credentials are not kept, only stored in a session for the duration of your
+					visit on the site. When checking "remember me" a cookie is stored on your local computer
+					with your account details.</p>
+					<h2>Windows Azure</h2>
+					<p>This service only works on <strong>Windows Azure Blob Storage</strong> accounts. You
+					can always suggest new features on our 
+					<a href="http://github.com/PHPBenelux/azureblob/issues">Github issue list</a>.</p>
                 </div>
                 <div class="clear">&nbsp;</div>
             </div>
