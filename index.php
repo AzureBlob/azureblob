@@ -9,11 +9,15 @@ set_include_path(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . PATH_SEPARATO
 session_start();
 
 // Define some constants first
+define('AZURE_BASE_URI', 'core.windows.net');
+define('AZURE_BLOB_URI', 'blob.core.windows.net');
+define('AZURE_TABLE_URI', 'table.core.windows.net');
+define('AZURE_QUEUE_URI', 'queue.core.windows.net');
 define('COOKIE_NAME', 'azure_account');
 define('CONTAINER', 'azure_container');
 
 // Let's set our pages up first
-$pages = array ('index','browse','container','add','del','create','remove','logout');
+$pages = array ('index','browse','container','add','del','create','remove','logout','listqueues');
 $page = isset ($_GET['page']) ? $_GET['page'] : 'index';
 
 function render($contents, $key, $value)
@@ -176,6 +180,23 @@ switch ($page) {
 		unset($_SESSION[CONTAINER]);
 		header('Location: /');
 		break;
+        case 'listqueues':
+            require_once 'WindowsAzure/WindowsAzure.php';
+            $config = new WindowsAzure\Common\Configuration();
+            $config->setProperty(WindowsAzure\Queue\QueueSettings::ACCOUNT_NAME, $_SESSION[COOKIE_NAME]['account_name']);
+            $config->setProperty(WindowsAzure\Queue\QueueSettings::URI, sprintf('%s.%s', $_SESSION[COOKIE_NAME]['account_name'], AZURE_QUEUE_URI));
+            $config->setProperty(WindowsAzure\Queue\QueueSettings::ACCOUNT_KEY, $_SESSION[COOKIE_NAME]['account_key']);
+            
+            $queueRestProxy = WindowsAzure\Queue\QueueService::create($config);
+            $queues = array ();
+            try {
+                $queues = $queueRestProxy->listQueues();
+            } catch (WindowsAzure\Common\ServiceException $e) {
+                echo sprintf('%s: %s', $e->getCode(), $e->getMessage());
+            }
+            var_dump($queues);
+            
+            break;
 	case '404':
 	default:
 		$data = file_get_contents(realpath('./tpl/404.tpl'));
