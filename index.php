@@ -10,7 +10,7 @@ session_start();
 
 // Define some constants first
 define('AZURE_BLOB_FQD', 'plopster.blob.core.windows.net');
-define('AZURE_CDN_FQD', 'az287601.vo.msecnd.net');
+define('AZURE_CDN_FQD', 'blob.phpdev.nu');
 define('AZURE_BASE_URI', 'core.windows.net');
 define('AZURE_BLOB_URI', 'blob.core.windows.net');
 define('AZURE_TABLE_URI', 'table.core.windows.net');
