@@ -9,6 +9,8 @@ set_include_path(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . PATH_SEPARATO
 session_start();
 
 // Define some constants first
+define('AZURE_BLOB_FQD', 'plopster.blob.core.windows.net');
+define('AZURE_CDN_FQD', 'az287601.vo.msecnd.net');
 define('AZURE_BASE_URI', 'core.windows.net');
 define('AZURE_BLOB_URI', 'blob.core.windows.net');
 define('AZURE_TABLE_URI', 'table.core.windows.net');
@@ -23,6 +25,10 @@ $page = isset ($_GET['page']) ? $_GET['page'] : 'index';
 function render($contents, $key, $value)
 {
 	return str_replace('{{' . $key . '}}', $value, $contents);
+}
+function cdn($originalUrl)
+{
+	return str_replace(AZURE_BLOB_FQD, AZURE_CDN_FQD, $originalUrl);
 }
 // Let's capture 404 File not found exceptions first
 if (!in_array($page, $pages)) {
@@ -89,7 +95,7 @@ switch ($page) {
 			$rowClass = 0 === $idx % 2 ? 'even' : 'odd';
 			$row = render($row, 'class', $rowClass);
 			$row = render($row, 'blob_name', $blob->getName());
-			$row = render($row, 'blob_url', $blob->getUrl());
+			$row = render($row, 'blob_url', cdn($blob->getUrl()));
 			$row = render($row, 'blob_type', $blob->getProperties()->getContentType());
 			$row = render($row, 'blob_date', $blob->getProperties()->getLastModified()->format('r'));
 			$blobList[] = $row;
