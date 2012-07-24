@@ -1,0 +1,37 @@
+/** setting the font face for azure websites **/
+@font-face { font-family: "Segoe UI"; src: local("Segoe UI"), url('http://az213233.vo.msecnd.net/Content/Fonts/segoeui.ttf'); }
+@font-face { font-family: "Segoe UI Semibold"; src: local("Segoe UI Semibold"), url('http://az213233.vo.msecnd.net/Content/Fonts/seguisb.ttf'); }
+@font-face { font-family: "Segoe UI Light"; src: local("Segoe UI Light"), url('http://az213233.vo.msecnd.net/Content/Fonts/segoeuil.ttf'); }
+
+/** defining the basic styling **/
+* { margin: 0; padding: 0; }
+body { background: white; font-family: "Segoe UI Light", Helvetica, Sans-serif; text-align: center; }
+a { text-decoration: none; }
+
+header { padding: 2px 25px; }
+nav { display: none; }
+footer { height: 50px; background: #323232; color: white;}
+
+#master { width: 1000px; text-align: left; margin: 0 auto; }
+.clear { clear: both; font-size: 0; }
+
+a.logo { font-size: larger; font-family: "Segoe UI Semibold", Helvetica, Sans-serif; font-weight: bold; }
+a.logout { float: right; color: white; }
+
+ul.navigation { list-style: none; }
+ul.navigation li { width: 120px; display: inline; padding: 5px 0; }
+
+a.navlink { font-weight: bold; font-family: "Segoe UI Semibold", Helvetica, Sans-serif; }
+a.navlink:hover { color: #71B1D1; }
+
+#leftnav { width: 250px; float: left; background: #71B1D1; color: white; min-height: 550px; }
+#content { width: 750px; margin-left: 250px; min-height: 550px; }
+#innercontent { padding: 0 25px; }
+
+/** some color definitions **/
+.metro_blue_bg { background: #71B1D1; }
+.metro_blue_fg { color: #71B1D1; }
+.metro_black_bg { background: #323232; }
+.metro_black_fg { color: #323232; }
+.metro_white_bg { background: white; }
+.metro_white_fg { color: white; }

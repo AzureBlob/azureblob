@@ -35,6 +35,7 @@
                                     <option value="application/octed-stream">Binary</option>
                                     <option value="text/plain">Text</option>
                                     <option value="image/png">PNG</option>
+									<option value="image/gif">GIF</option>
                                     <option value="image/jpg">JPG/JPEG</option>
                                     <option value="video/m4v">m4v Video</option>
                                     <option value="video/quicktime">Quicktime</option>
