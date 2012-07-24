@@ -102,6 +102,7 @@ switch ($page) {
             $row = render($row, 'blob_type', $blob->getProperties()->getContentType());
             $row = render($row, 'blob_date', $blob->getProperties()->getLastModified()->format('r'));
             $blobList[] = $row;
+            $idx++;
         }
 
         $data = render($data, 'blob_list', implode(PHP_EOL, $blobList));
@@ -207,8 +208,51 @@ switch ($page) {
         } catch (WindowsAzure\Common\ServiceException $e) {
             echo sprintf('%s: %s', $e->getCode(), $e->getMessage());
         }
-        var_dump($queues);
+        
+        // Load initial template
+        $data = file_get_contents(realpath('./tpl/queuebrowse.tpl'));
+        
+        // List all queues
+        $queueList = array ();
+        $currentQueue = null;
+        /*$queueFullList = $queues->getQueues();
+        if (isset ($_SESSION[COOKIE_NAME]['current_queue'])) {
+            $currentQueue = $_SESSION[COOKIE_NAME]['current_queue'];
+        } else {
+            $currentQueue = 0 < count($queueFullList) ? $queueFullList[0] : '';
+            $_SESSION[COOKIE_NAME]['current_queue'] = $currentQueue;
+        }
+        //var_dump($currentQueue);die;*/
+        $currentQueue = 'test';
+        $data = render($data, 'current_queue', $currentQueue);
+        foreach ($queues->getQueues() as $queue) {
+            if (isset ($_SESSION[COOKIE_NAME]['current_queue']) && $_SESSION[COOKIE_NAME]['current_queue'] === $queue->getName()) {
+                $queueList[] = sprintf('<option value="%s" selected="selected">%s</option>', $queue->getName(), $queue->getName());
+            } else {
+                $queueList[] = sprintf('<option value="%s">%s</option>', $queue->getName(), $queue->getName());
+            }
+        }
+        $data = render($data, 'queue_list', implode(PHP_EOL, $queueList));
+        
+        // List all messages of a particular queue
+        $idx = 0;
+        $queueList = array ();
+        $rowData = file_get_contents(realpath('./tpl/queuerow.tpl'));
+        /* need to be fixed
+        foreach ($queues->getQueues() as $queue) {
+            if ($queue instanceof \WindowsAzure\Queue\Models\Queue) {
+            $row = $rowData;
+            $rowClass = 0 === $idx % 2 ? 'even' : 'odd';
+            $row = render($row, 'class', $rowClass);
+            $row = render($row, 'queue_name', $queue->getName());
+            $row = render($row, 'queue_url', $queue->getUrl());
+            $queueList[] = $row;
+            $idx++;
+        }}*/
 
+        //$data = render($data, 'message_list', implode(PHP_EOL, $queueList));
+        $data = render($data, 'message_list', '<tr><td>&nbsp;</td><td>&nbsp;</td><td>x</td></tr>');
+        echo $data;
         break;
     
     // Creates a queue to send messages to
