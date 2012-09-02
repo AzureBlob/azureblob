@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Stdlib
+END
+CallbackHandler.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Stdlib/CallbackHandler.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Stdlib/Exception.php
+END
+SplPriorityQueue.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Stdlib/SplPriorityQueue.php
+END
+PriorityQueue.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Stdlib/PriorityQueue.php
+END

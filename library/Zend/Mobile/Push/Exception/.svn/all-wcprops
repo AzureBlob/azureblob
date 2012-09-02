@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception
+END
+InvalidAuthToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/InvalidAuthToken.php
+END
+ServerUnavailable.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/ServerUnavailable.php
+END
+DeviceQuotaExceeded.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/DeviceQuotaExceeded.php
+END
+InvalidPayload.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/InvalidPayload.php
+END
+QuotaExceeded.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/QuotaExceeded.php
+END
+InvalidRegistration.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/InvalidRegistration.php
+END
+InvalidTopic.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/InvalidTopic.php
+END
+InvalidToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Exception/InvalidToken.php
+END

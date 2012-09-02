@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Memory
+END
+Manager.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Memory/Manager.php
+END
+Value.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Memory/Value.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Memory/Exception.php
+END
+Container.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Memory/Container.php
+END
+AccessController.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Memory/AccessController.php
+END

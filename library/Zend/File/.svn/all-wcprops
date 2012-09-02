@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/framework/!svn/ver/24985/standard/branches/release-1.12/library/Zend/File
+END
+ClassFileLocator.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/framework/!svn/ver/24985/standard/branches/release-1.12/library/Zend/File/ClassFileLocator.php
+END
+Transfer.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/File/Transfer.php
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Json
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Json/Exception.php
+END
+Expr.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Json/Expr.php
+END
+Encoder.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Json/Encoder.php
+END
+Decoder.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Json/Decoder.php
+END
+Server.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Json/Server.php
+END

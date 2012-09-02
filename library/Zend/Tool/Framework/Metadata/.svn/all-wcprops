@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Tool/Framework/Metadata
+END
+Tool.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Tool/Framework/Metadata/Tool.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Tool/Framework/Metadata/Interface.php
+END
+Basic.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Tool/Framework/Metadata/Basic.php
+END
+Attributable.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Tool/Framework/Metadata/Attributable.php
+END
+Dynamic.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Tool/Framework/Metadata/Dynamic.php
+END

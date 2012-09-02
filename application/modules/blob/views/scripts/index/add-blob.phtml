@@ -1,0 +1,43 @@
+<?php $this->headTitle($this->translate('Upload Blobs to %s', $this->container)) ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/jquery/js/jquery-1.8.0.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/js/jquery-ui-1.8.23.custom.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/development-bundle/ui/minified/jquery.ui.widget.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/plugins/File-Upload/js/jquery.iframe-transport.js'))
+                         ->appendFile($this->baseUrl('/jquery/plugins/File-Upload/js/jquery.fileupload.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/jquery/css/ui-lightness/jquery-ui-1.8.23.custom.css')); ?>
+<?php $this->headScript()->appendScript(<<<EOS
+
+$(document).ready(function () {
+
+    // prepare file upload settings
+    $('#file').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $( "#progressbar" ).progressbar({
+                value: progress
+            });
+        }
+    });
+
+});
+
+EOS
+); ?>
+
+<h1 class="pageTitle"><?php echo $this->translate('Upload Blobs to %s', $this->container) ?></h1>
+
+
+<a href="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'browse', 'container' => $this->container), null, true) ?>" title="Return back to <?php echo $this->escape($this->container) ?>"><span class="ui-icon ui-icon-circle-arrow-w" style="display: inline-block">&lt;-</span></a>
+<form id="fileUpload" action="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'upload-blob')) ?>" method="post" enctype="multipart/form-data">
+    <label for="file">File</label>
+    <input type="file" name="file[]" id="file" multiple="multiple">
+    <input type="submit" id="uploadBtn" value="Upload">
+</form>
+<br/>
+<div id="progressbar"></div>

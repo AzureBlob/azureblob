@@ -1,0 +1,36 @@
+<?php $this->headTitle($this->translate('WASA Browser')) ?>
+
+<h1 class="pageTitle"><?php echo $this->translate('WASA Browser') ?></h1>
+
+<form id="containerSwitch" action="<?php echo $this->url(array ('module' => 'default', 'controller' => 'index', 'action' => 'browse'), null, true) ?>" method="GET">
+<select name="container" id="containerList">
+<?php foreach ($this->containers as $container): ?>
+    <option value="<?php echo $container->getName() ?>"><?php echo $container->getName() ?></option>
+<?php endforeach; ?>
+</select>
+<input type="submit" value="Switch"/>
+
+<div class="clear">&nbsp;</div>
+
+<dl class="blobList">
+    <dt class="title large">File</dt>
+    <dd class="title medium">Location</dd>
+    <dd class="title small">Content-type</dd>
+    <dd class="title small">Last modified</dd>
+
+<?php foreach ($this->blobs as $blob): ?>
+
+    <dt class="large"><?php echo $this->escape($this->substring($blob->getName())) ?></dt>
+    <dd class="medium"><a href="<?php echo $this->escape($blob->getUrl()) ?>"><?php echo $this->escape($this->substring($blob->getUrl())) ?></a></dd>
+    <dd class="small"><?php echo $blob->getProperties()->getContentType() ?></dd>
+    <dd class="small"><?php echo $blob->getProperties()->getLastModified()->format('Y-m-d H:i:s') ?></dd>
+<?php endforeach; ?>
+
+</dl>
+<div class="clear">&nbsp;</div>
+
+<pre>
+<?php
+var_dump($this->queues);
+?>
+</pre>

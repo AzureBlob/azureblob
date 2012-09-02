@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding
+END
+PaginationOutput.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/PaginationOutput.php
+END
+ShippingInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/ShippingInfo.php
+END
+Category.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/Category.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/Exception.php
+END
+Aspect.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/Aspect.php
+END
+SellingStatus.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/SellingStatus.php
+END
+SellerInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/SellerInfo.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/Abstract.php
+END
+Storefront.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/Storefront.php
+END
+ListingInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/Ebay/Finding/ListingInfo.php
+END

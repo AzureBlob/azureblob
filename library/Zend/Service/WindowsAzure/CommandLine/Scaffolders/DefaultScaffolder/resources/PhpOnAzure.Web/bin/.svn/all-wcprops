@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/PhpOnAzure.Web/bin
+END
+add-environment-variables.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 195
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/PhpOnAzure.Web/bin/add-environment-variables.cmd
+END
+add-environment-variables.ps1
+K 25
+svn:wc:ra_dav:version-url
+V 195
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/PhpOnAzure.Web/bin/add-environment-variables.ps1
+END
+install-php.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 181
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/PhpOnAzure.Web/bin/install-php.cmd
+END

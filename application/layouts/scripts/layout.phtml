@@ -1,0 +1,22 @@
+<?php echo $this->doctype() ?>
+<html>
+    <head>
+        <?php
+            echo $this->headMeta() . PHP_EOL;
+            echo $this->headTitle() . PHP_EOL;
+            echo $this->headLink() . PHP_EOL;
+            echo $this->headStyle() . PHP_EOL;
+            echo $this->headScript() . PHP_EOL;
+        ?>
+    </head>
+    
+    <body>
+        <div id="master">
+            <div id="header"><?php echo $this->render('header.phtml') ?></div>
+            <div id="center">
+<?php echo $this->layout()->content; ?>
+            </div>
+            <div id="footer"><?php echo $this->render('footer.phtml') ?></div>
+    </body>
+
+</html>

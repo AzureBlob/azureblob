@@ -1,0 +1,74 @@
+/** setting the font face for azure websites **/
+@font-face { font-family: "Segoe UI"; src: local("Segoe UI"), url('http://az213233.vo.msecnd.net/Content/Fonts/segoeui.ttf'); }
+@font-face { font-family: "Segoe UI Semibold"; src: local("Segoe UI Semibold"), url('http://az213233.vo.msecnd.net/Content/Fonts/seguisb.ttf'); }
+@font-face { font-family: "Segoe UI Light"; src: local("Segoe UI Light"), url('http://az213233.vo.msecnd.net/Content/Fonts/segoeuil.ttf'); }
+
+* { margin: 0; padding: 0; }
+
+body { font-family: "Segoe UI", sans-serif; text-align: center; background: white; }
+a { text-decoration: none; color: #71B1D1; }
+
+#master { width: 1000px; text-align: left; margin: 0 auto; }
+
+#header { height: 50px; background: white; color: black; }
+#header a { color: black; font-family: "Segoe UI Semibold"; }
+
+#center { min-height: 500px; }
+#footer { background: white; color: black; padding: 50px 0 20px 0; }
+
+#topBar { padding: 0 25px; }
+span#logo { font-weight: bold; }
+
+div#splash {
+    background: transparent url("http://plopster.blob.core.windows.net/plopstore/boysgarden_500x400.png") no-repeat scroll 0 0;
+    color: #FFFFFF;
+    font-family: "Segoe UI","Helvetica",Garuda,Arial,sans-serif;
+    font-weight: 100;
+    height: 400px;
+    position: relative;
+    width: 500px;
+    float: left;
+}
+.rounded {
+    border: 1px solid #99a4b0; 
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+    margin: 10px 5px;
+}
+
+.left { text-align: left; }
+.center { text-align: center; }
+.right { text-align: right; }
+.floatLeft { float: left; }
+.floatRight { float: right; }
+.clear { clear: both; font-size: 0; }
+.icon { width: 16px; height: 16px; text-align: center; cursor: pointer; }
+
+.metro_blue_bg { background: #71B1D1; }
+.metro_blue_fg { color: #71B1D1; }
+.metro_black_bg { background: #323232; }
+.metro_black_fg { color: #323232; }
+.metro_white_bg { background: white; }
+.metro_white_fg { color: white; }
+
+/** specific style settings **/
+div#containerSwitchForm { float: left; width: 250px; }
+div#addBlob { }
+
+
+form#WindowsAzureAccount dl { }
+form#WindowsAzureAccount dl dt { float: left; width: 120px; }
+form#WindowsAzureAccount input[type="text"] { width: 180px; border: 1px solid grey; font-size: larger; padding: 1px 3px; }
+
+dl.blobList { }
+dl.blobList dt { float: left; clear: left; width: 300px; padding: 2px 5px; margin-top: 1px; }
+dl.blobList dt.data { background: #71B1D1; color: white; }
+dl.blobList dd { float: left; padding: 2px 5px; margin-top: 1px; }
+dl.blobList dd a:hover { background-color: #71B1D1; color: white; }
+dl.blobList dd.small { width: 180px; }
+dl.blobList dd.medium { width: 220px; }
+dl.blobList dd.large { width: 260px; }
+dl.blobList dd.data { font-family: "Segoe UI Light"; }
+dl.blobList dt.title dl.blobList dd.title { font-weight: bold; font-family: "Segoe UI Semibold"; }

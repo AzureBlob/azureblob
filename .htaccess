@@ -1,4 +1,0 @@
-php_value upload_max_filesize "50M"
-php_value post_max_size "50M"
-php_flag display_errors "On"
-php_value error_reporting E_ALL|E_STRICT

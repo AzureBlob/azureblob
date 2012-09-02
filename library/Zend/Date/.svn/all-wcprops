@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Date
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Date/Exception.php
+END
+Cities.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Date/Cities.php
+END
+DateObject.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Date/DateObject.php
+END

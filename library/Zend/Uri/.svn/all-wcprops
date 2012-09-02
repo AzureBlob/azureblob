@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Uri
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Uri/Exception.php
+END
+Http.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Uri/Http.php
+END

@@ -1,0 +1,9 @@
+<?php $this->headTitle($this->translate('Add a new container')) ?>
+
+<h1><?php echo $this->translate('Add a new container') ?></h1>
+
+<form action="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'create-container'), null, true) ?>" method="post">
+    <label for="containerName">Container name</label>:
+    <input type="text" name="containerName" id="containerName" value="" />
+    <input type="submit" value="Create container" />
+</form>

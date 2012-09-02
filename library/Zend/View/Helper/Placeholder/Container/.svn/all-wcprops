@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/View/Helper/Placeholder/Container
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/View/Helper/Placeholder/Container/Exception.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/View/Helper/Placeholder/Container/Abstract.php
+END
+Standalone.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/View/Helper/Placeholder/Container/Standalone.php
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/SqlAzure/Management
+END
+ServerInstance.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/SqlAzure/Management/ServerInstance.php
+END
+Client.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/SqlAzure/Management/Client.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/SqlAzure/Management/Exception.php
+END
+ServiceEntityAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/SqlAzure/Management/ServiceEntityAbstract.php
+END
+FirewallRuleInstance.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/SqlAzure/Management/FirewallRuleInstance.php
+END

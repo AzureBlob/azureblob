@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Feed/Reader/Extension/DublinCore
+END
+Entry.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Feed/Reader/Extension/DublinCore/Entry.php
+END
+Feed.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Feed/Reader/Extension/DublinCore/Feed.php
+END

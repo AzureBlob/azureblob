@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/framework/!svn/ver/25022/standard/branches/release-1.12/library/Zend/Mobile/Push/Message
+END
+Mpns.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Message/Mpns.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Message/Exception.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Message/Interface.php
+END
+Apns.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Mobile/Push/Message/Apns.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/framework/!svn/ver/25009/standard/branches/release-1.12/library/Zend/Mobile/Push/Message/Abstract.php
+END
+Gcm.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/framework/!svn/ver/25022/standard/branches/release-1.12/library/Zend/Mobile/Push/Message/Gcm.php
+END

@@ -1,0 +1,24 @@
+<?php $this->headTitle($this->translate('Windows Azure Blob Storage containers')) ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/jquery/css/ui-lightness/jquery-ui-1.8.23.custom.css')); ?>
+
+<h1 class="pageTitle"><?php echo $this->translate('Windows Azure Blob Storage containers') ?></h1>
+
+<div id="addBlob" class="icon floatRight"><a id="addBlobLink" href="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'add-container'), null, true) ?>" title="Add a new container to this storage"><span class="ui-icon ui-icon-circle-plus" style="display:inline-block;">+</span></a></div>
+
+<div class="clear">&nbsp;</div>
+
+<dl class="blobList">
+    <dt class="title large metro_blue_fg metro_black_bg">Container</dt>
+    <dd class="title small metro_blue_fg metro_black_bg">Last modified</dd>
+    <dd class="title metro_blue_fg metro_black_bg">Actions</dd>
+
+<?php foreach ($this->containers as $container): ?>
+
+    <dt class="data large"><a class="metro_white_fg" href="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'browse', 'container' => $container->getName()), null, true) ?>" title="<?php echo $this->escape($this->substring($container->getName())) ?>"><?php echo $this->escape($this->substring($container->getName())) ?></a></dt>
+    <dd class="data medium"><?php echo $this->escape($container->getProperties()->getLastModified()->format('Y-m-d H:i:s')) ?></dd>
+    <dd class="data center"><a href="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'remove-container', 'container' => $container->getName()), null, true) ?>" title="Remove <?php echo $this->escape($container->getName()) ?>" onClick="return confirm('Are you sure you want to delete <?php echo $this->escape($container->getName()) ?>?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
+<?php endforeach; ?>
+
+</dl>
+<div class="clear">&nbsp;</div>
+
