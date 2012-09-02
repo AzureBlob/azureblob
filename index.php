@@ -9,17 +9,20 @@ set_include_path(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . PATH_SEPARATO
 session_start();
 
 // Define some constants first
-define('AZURE_BLOB_FQD', 'plopster.blob.core.windows.net');
-define('AZURE_CDN_FQD', 'blob.phpdev.nu');
-define('AZURE_BASE_URI', 'core.windows.net');
-define('AZURE_BLOB_URI', 'blob.core.windows.net');
+define('AZURE_BLOB_FQD',  'plopster.blob.core.windows.net');
+define('AZURE_CDN_FQD',   'blob.phpdev.nu');
+define('AZURE_BASE_URI',  'core.windows.net');
+define('AZURE_BLOB_URI',  'blob.core.windows.net');
 define('AZURE_TABLE_URI', 'table.core.windows.net');
 define('AZURE_QUEUE_URI', 'queue.core.windows.net');
-define('COOKIE_NAME', 'azure_account');
-define('CONTAINER', 'azure_container');
+define('COOKIE_NAME',     'azure_account');
+define('CONTAINER',       'azure_container');
 
 // Let's set our pages up first
-$pages = array ('index','browse','container','add','del','create','remove','logout','listqueues','createqueue');
+$pages = array (
+    'index','browse','container','add','del','create','remove','logout',
+    'listqueues','createqueue', 'switchqueue',
+);
 $page = isset ($_GET['page']) ? $_GET['page'] : 'index';
 
 // This function allows me to inject values in the templates
@@ -212,46 +215,36 @@ switch ($page) {
         // Load initial template
         $data = file_get_contents(realpath('./tpl/queuebrowse.tpl'));
         
-        // List all queues
-        $queueList = array ();
+        // List all queues for the dropdown selector
         $currentQueue = null;
-        /*$queueFullList = $queues->getQueues();
-        if (isset ($_SESSION[COOKIE_NAME]['current_queue'])) {
-            $currentQueue = $_SESSION[COOKIE_NAME]['current_queue'];
-        } else {
-            $currentQueue = 0 < count($queueFullList) ? $queueFullList[0] : '';
-            $_SESSION[COOKIE_NAME]['current_queue'] = $currentQueue;
-        }
-        //var_dump($currentQueue);die;*/
-        $currentQueue = 'test';
-        $data = render($data, 'current_queue', $currentQueue);
-        foreach ($queues->getQueues() as $queue) {
-            if (isset ($_SESSION[COOKIE_NAME]['current_queue']) && $_SESSION[COOKIE_NAME]['current_queue'] === $queue->getName()) {
-                $queueList[] = sprintf('<option value="%s" selected="selected">%s</option>', $queue->getName(), $queue->getName());
+        $queueOptions = array ();
+        $queueFullList = $queues->getQueues();
+        foreach ($queueFullList as $queue) {
+            $currentQueue = isset ($_SESSION[COOKIE_NAME]['current_queue']) ? $_SESSION[COOKIE_NAME]['current_queue'] : '';
+            if ($queue->getName() === $currentQueue) {
+                $queuOptions[] = sprintf('<option value="%s" selected="selected">%s</option>', $queue->getName(), $queue->getName());
             } else {
-                $queueList[] = sprintf('<option value="%s">%s</option>', $queue->getName(), $queue->getName());
+                $queuOptions[] = sprintf('<option value="%s">%s</option>', $queue->getName(), $queue->getName());
             }
         }
-        $data = render($data, 'queue_list', implode(PHP_EOL, $queueList));
+        if (!isset ($_SESSION[COOKIE_NAME]['current_queue']) && isset ($queueFullList[0])) {
+            $_SESSION[COOKIE_NAME]['current_queue'] = $queueFullList[0]->getName();
+        }
         
-        // List all messages of a particular queue
-        $idx = 0;
-        $queueList = array ();
-        $rowData = file_get_contents(realpath('./tpl/queuerow.tpl'));
-        /* need to be fixed
-        foreach ($queues->getQueues() as $queue) {
-            if ($queue instanceof \WindowsAzure\Queue\Models\Queue) {
-            $row = $rowData;
-            $rowClass = 0 === $idx % 2 ? 'even' : 'odd';
-            $row = render($row, 'class', $rowClass);
-            $row = render($row, 'queue_name', $queue->getName());
-            $row = render($row, 'queue_url', $queue->getUrl());
-            $queueList[] = $row;
-            $idx++;
-        }}*/
-
-        //$data = render($data, 'message_list', implode(PHP_EOL, $queueList));
-        $data = render($data, 'message_list', '<tr><td>&nbsp;</td><td>&nbsp;</td><td>x</td></tr>');
+        // let's update the currentQueue cookie
+        if ('' === $currentQueue && isset ($currentFullList[0])) {
+            $currentQueue = $queueFullList[0]->getName();
+        }
+        $_SESSION[COOKIE_NAME]['current_queue'] = $currentQueue;
+        
+        
+        // Let's look at our queue contents
+        $currentMessages = array ();
+        $currentQueue = 'test';
+        
+        // Render data
+        $data = render($data, 'queue_list', implode(PHP_EOL, $queuOptions));
+        $data = render($data, 'current_queue', $currentQueue);
         echo $data;
         break;
     
@@ -270,6 +263,12 @@ switch ($page) {
             echo sprintf('%s: %s', $e->getCode(), $e->getMessage());
         }
         echo 'Queue "test" created';
+        break;
+    case 'switchqueue':
+        $queue = isset ($_POST['queue']) ? $_POST['queue'] : '';
+        $_SESSION[COOKIE_NAME]['current_queue'] = $queue;
+        var_dump($_SESSION[COOKIE_NAME]['current_queue']);die;
+        header('Location: /?page=listqueues');
         break;
     case '404':
     default:

@@ -23,8 +23,8 @@
                     
                     <div id="mgmtBar">
                         <div class="manageLeft">
-                            <form action="/?page=queue" method="post">
-                                <label for="container">Container</label>:
+                            <form action="/?page=switchqueue" method="post">
+                                <label for="queue">Queue</label>:
                                 <select name="queue" id="queue">
                                         {{queue_list}}
                                 </select>
