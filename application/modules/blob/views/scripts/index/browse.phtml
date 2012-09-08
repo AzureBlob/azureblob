@@ -4,7 +4,7 @@
                          ->appendFile($this->baseUrl('/jquery/development-bundle/ui/minified/jquery.ui.widget.min.js'))
                          ->appendFile($this->baseUrl('/jquery/plugins/File-Upload/js/jquery.iframe-transport.js'))
                          ->appendFile($this->baseUrl('/jquery/plugins/File-Upload/js/jquery.fileupload.js')); ?>
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/jquery/css/ui-lightness/jquery-ui-1.8.23.custom.css')); ?>
+<?php $this->headLink()->prependStylesheet($this->baseUrl('/jquery/css/redmond/jquery-ui-1.8.23.custom.css')); ?>
 <?php $this->headScript()->appendScript(<<<EOS
 
 $(document).ready(function () {
@@ -25,10 +25,16 @@ $(document).ready(function () {
             }
         }
     });
+    $('#preview').dialog({
+        autoOpen: false,
+        width: 600,
+        modal: true
+    });
 
     // open the dialog to upload files
     $('#addBlob').click(function () {
-        //$('#dialog').dialog('open');
+        $('#dialog').dialog('open');
+        return false;
     });
 
     // prepare file upload settings
@@ -45,6 +51,13 @@ $(document).ready(function () {
                 value: progress
             });
         }
+    });
+    
+    $('.ui-icon-search').click(function () {
+        console.log($(this).attr('href'));
+        $('#preview').html('<img src="' + $(this).attr('href') + '" width="540"/>');
+        $('#preview').dialog('open');
+        return false;
     });
 
 });
@@ -82,7 +95,12 @@ EOS
     <dd class="data medium"><a href="<?php echo $this->escape($blob->getUrl()) ?>" title="<?php echo $this->escape($blob->getUrl()) ?>"><?php echo $this->escape($this->substring($blob->getUrl())) ?></a></dd>
     <dd class="data small"><?php echo $blob->getProperties()->getContentType() ?></dd>
     <dd class="data small"><?php echo $blob->getProperties()->getLastModified()->format('Y-m-d H:i:s') ?></dd>
-    <dd class="data center"><a href="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'remove-blob', 'file' => $blob->getName()), null, true) ?>" title="Remove <?php echo $this->escape($blob->getName()) ?>" onClick="return confirm('Are you sure you want to delete <?php echo $this->escape($blob->getName()) ?>?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
+    <dd class="data center">
+        <a href="<?php echo $this->url(array ('module' => 'blob', 'controller' => 'index', 'action' => 'remove-blob', 'file' => $blob->getName()), null, true) ?>" title="Remove <?php echo $this->escape($blob->getName()) ?>" onClick="return confirm('Are you sure you want to delete <?php echo $this->escape($blob->getName()) ?>?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a>
+        <?php if (strstr($blob->getProperties()->getContentType(), 'image/')): ?>
+        <a href="<?php echo $this->escape($blob->getUrl()) ?>" class="ui-icon ui-icon-search"  style="display: inline-block">o</a>
+        <?php endif; ?>
+    </dd>
 <?php endforeach; ?>
 
 </dl>
@@ -97,3 +115,5 @@ EOS
     <br/>
     <div id="progressbar"></div>
 </div>
+
+<div id="preview"></div>
