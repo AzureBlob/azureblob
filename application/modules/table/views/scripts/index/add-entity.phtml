@@ -1,0 +1,16 @@
+<?php $this->headTitle($this->translate('Create a new entity in table %s', $this->table)) ?>
+
+<h1><?php echo $this->translate('Create a new entity in table %s', $this->table) ?></h1>
+
+<form id="entityForm" action="<?php echo $this->url(array (
+    'module' => 'table',
+    'controller' => 'index',
+    'action' => 'create-entity',
+), null, true) ?>" method="post">
+    <label for="partitionKey">Partition Key</label>:
+    <input type="text" name="partition" id="partitionKey"/>
+    <label for="rowKey">Row Key</label>:
+    <input type="text" name="row" id="rowKey"/>
+    <input type="hidden" name="table" value="<?php echo $this->escape($this->table) ?>"/>
+    <input type="submit" value="Add entity"/>
+</form>

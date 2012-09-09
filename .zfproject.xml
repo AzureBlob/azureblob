@@ -83,11 +83,10 @@
             <controllerFile controllerName="Index">
               <actionMethod actionName="index"/>
               <actionMethod actionName="list"/>
-              <actionMethod actionName="table"/>
-              <actionMethod actionName="create"/>
-              <actionMethod actionName="store"/>
-              <actionMethod actionName="retrieve"/>
-              <actionMethod actionName="remove"/>
+              <actionMethod actionName="browse"/>
+              <actionMethod actionName="addEntity"/>
+              <actionMethod actionName="createEntity"/>
+              <actionMethod actionName="removeEntity"/>
             </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
@@ -105,19 +104,16 @@
                 <viewScriptFile forActionName="list"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
-                <viewScriptFile forActionName="table"/>
+                <viewScriptFile forActionName="browse"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
-                <viewScriptFile forActionName="create"/>
+                <viewScriptFile forActionName="addEntity"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
-                <viewScriptFile forActionName="store"/>
+                <viewScriptFile forActionName="createEntity"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
-                <viewScriptFile forActionName="retrieve"/>
-              </viewControllerScriptsDirectory>
-              <viewControllerScriptsDirectory forControllerName="Index">
-                <viewScriptFile forActionName="remove"/>
+                <viewScriptFile forActionName="removeEntity"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
@@ -229,6 +225,11 @@
                 <testApplicationActionMethod forActionName="store"/>
                 <testApplicationActionMethod forActionName="retrieve"/>
                 <testApplicationActionMethod forActionName="remove"/>
+                <testApplicationActionMethod forActionName="list"/>
+                <testApplicationActionMethod forActionName="browse"/>
+                <testApplicationActionMethod forActionName="addEntity"/>
+                <testApplicationActionMethod forActionName="createEntity"/>
+                <testApplicationActionMethod forActionName="removeEntity"/>
               </testApplicationControllerFile>
             </testApplicationControllerDirectory>
           </testApplicationModuleDirectory>

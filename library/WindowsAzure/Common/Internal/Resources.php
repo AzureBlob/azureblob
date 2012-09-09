@@ -39,6 +39,29 @@ class Resources
 {
     // @codingStandardsIgnoreStart
     
+    // Connection strings
+    const USE_DEVELOPMENT_STORAGE_NAME = 'UseDevelopmentStorage';
+    const DEVELOPMENT_STORAGE_PROXY_URI_NAME = 'DevelopmentStorageProxyUri';
+    const DEFAULT_ENDPOINTS_PROTOCOL_NAME = 'DefaultEndpointsProtocol';
+    const ACCOUNT_NAME_NAME = 'AccountName';
+    const ACCOUNT_KEY_NAME = 'AccountKey';
+    const BLOB_ENDPOINT_NAME = 'BlobEndpoint';
+    const QUEUE_ENDPOINT_NAME = 'QueueEndpoint';
+    const TABLE_ENDPOINT_NAME = 'TableEndpoint';
+    const SHARED_ACCESS_SIGNATURE_NAME = 'SharedAccessSignature';
+    const DEV_STORE_NAME = 'devstoreaccount1';
+    const DEV_STORE_KEY = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==';
+    const BLOB_BASE_DNS_NAME = 'blob.core.windows.net';
+    const QUEUE_BASE_DNS_NAME = 'queue.core.windows.net';
+    const TABLE_BASE_DNS_NAME = 'table.core.windows.net';
+    const DEV_STORE_CONNECTION_STRING = 'BlobEndpoint=127.0.0.1:10000;QueueEndpoint=127.0.0.1:10001;TableEndpoint=127.0.0.1:10002;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==';
+    const SUBSCRIPTION_ID_NAME = 'SubscriptionID';
+    const CERTIFICATE_PATH_NAME = 'CertificatePath';
+    const SERVICE_MANAGEMENT_ENDPOINT_NAME = 'ServiceManagementEndpoint';
+    const SERVICE_BUS_ENDPOINT_NAME = 'Endpoint';
+    const SHARED_SECRET_ISSUER_NAME = 'SharedSecretIssuer';
+    const SHARED_SECRET_VALUE_NAME = 'SharedSecretValue';
+    
     // Messages
     const INVALID_TYPE_MSG = 'The provided variable should be of type: ';
     const INVALID_META_MSG = 'Metadata cannot contain newline characters.';
@@ -64,13 +87,30 @@ class Resources
     const INVALID_BLOB_PAT_MSG = 'The provided access type is invalid.';
     const INVALID_SVC_PROP_MSG = 'The provided service properties is invalid.';
     const UNKNOWN_SRILZER_MSG = 'The provided serializer type is unknown';
-    const INVALID_CSA_OPT_MSG = 'Must provide valid location or affinity group.';
-    const INVALID_USA_OPT_MSG = 'Must provide either description or label.';
+    const INVALID_CREATE_SERVICE_OPTIONS_MSG = 'Must provide valid location or affinity group.';
+    const INVALID_UPDATE_SERVICE_OPTIONS_MSG = 'Must provide either description or label.';
     const INVALID_CONFIG_MSG = 'Config object must be of type Configuration';
-    const INVALID_BUILDER_MSG = 'Builder object must implement IServicesBuilder';
     const INVALID_ACH_MSG = 'The provided access condition header is invalid';
-    const MISSING_CONFIG_SETTING_KEY_MSG = "Missing configuration setting %s which is required to create %sRestProxy.";
-    const MISSING_CONFIG_SETTING_VALUE_MSG = "The value of configuration setting %s can't be null or empty.";
+    const INVALID_RECEIVE_MODE_MSG = 'The receive message option is in neither RECEIVE_AND_DELETE nor PEEK_LOCK mode.';
+    const INVALID_CONFIG_URI = "The provided URI '%s' is invalid. It has to pass the check 'filter_var(<user_uri>, FILTER_VALIDATE_URL)'.";
+    const INVALID_CONFIG_VALUE = "The provided config value '%s' does not belong to the valid values subset:\n%s";
+    const INVALID_ACCOUNT_KEY_FORMAT = "The provided account key '%s' is not a valid base64 string. It has to pass the check 'base64_decode(<user_account_key>, true)'.";
+    const MISSING_CONNECTION_STRING_SETTINGS = "The provided connection string '%s' does not have complete configuration settings.";
+    const INVALID_CONNECTION_STRING_SETTING_KEY = "The setting key '%s' is not found in the expected configuration setting keys:\n%s";
+    const INVALID_CERTIFICATE_PATH = "The provided certificate path '%s' is invalid.";
+    const INSTANCE_TYPE_VALIDATION_MSG = 'The type of %s is %s but is expected to be %s.';
+    const MISSING_CONNECTION_STRING_CHAR = "Missing %s character";
+    const ERROR_PARSING_STRING = "'%s' at position %d.";
+    const INVALID_CONNECTION_STRING = "Argument '%s' is not a valid connection string: '%s'";
+    const ERROR_CONNECTION_STRING_MISSING_KEY = 'Missing key name';
+    const ERROR_CONNECTION_STRING_EMPTY_KEY = 'Empty key name';
+    const ERROR_CONNECTION_STRING_MISSING_CHARACTER = "Missing %s character";
+    const ERROR_EMPTY_SETTINGS = 'No keys were found in the connection string';
+    const MISSING_LOCK_LOCATION_MSG = 'The lock location of the brokered message is missing.';
+    const INVALID_SLOT = "The provided deployment slot '%s' is not valid. Only 'staging' and 'production' are accepted.";
+    const INVALID_DEPLOYMENT_LOCATOR_MSG = 'A slot or deployment name must be provided.';
+    const INVALID_CHANGE_MODE_MSG = "The change mode must be 'Auto' or 'Manual'. Use Mode class constants for that purpose.";
+    const INVALID_DEPLOYMENT_STATUS_MSG = "The change mode must be 'Running' or 'Suspended'. Use DeploymentStatus class constants for that purpose.";
 
     // HTTP Headers
     const X_MS_HEADER_PREFIX                 = 'x-ms-';
@@ -112,10 +152,11 @@ class Resources
     const LAST_MODIFIED                      = 'last-modified';
     const DATE                               = 'date';
     const AUTHENTICATION                     = 'authorization';
-    const WRAP_AUTHORIZATION                 = 'WRAP access_token={%s}';
+    const WRAP_AUTHORIZATION                 = 'WRAP access_token="%s"';
     const CONTENT_ENCODING                   = 'content-encoding';
     const CONTENT_LANGUAGE                   = 'content-language';
     const CONTENT_LENGTH                     = 'content-length';
+    const CONTENT_LENGTH_NO_SPACE            = 'contentlength';
     const CONTENT_MD5                        = 'content-md5';
     const CONTENT_TYPE                       = 'content-type';
     const CONTENT_ID                         = 'content-id';
@@ -136,6 +177,15 @@ class Resources
     const BLOB_TYPE_NAME               = 'IBlob';
     const TABLE_TYPE_NAME              = 'ITable';
     const SERVICE_MANAGEMENT_TYPE_NAME = 'IServiceManagement';
+    const SERVICE_BUS_TYPE_NAME        = 'IServiceBus';
+    const WRAP_TYPE_NAME               = 'IWrap';
+
+    // WRAP
+    const WRAP_ACCESS_TOKEN            = 'wrap_access_token'; 
+    const WRAP_ACCESS_TOKEN_EXPIRES_IN = 'wrap_access_token_expires_in'; 
+    const WRAP_NAME                    = 'wrap_name';
+    const WRAP_PASSWORD                = 'wrap_password';
+    const WRAP_SCOPE                   = 'wrap_scope'; 
     
     // HTTP Methods
     const HTTP_GET    = 'GET';
@@ -151,8 +201,6 @@ class Resources
     const AZURE_DATE_FORMAT      = 'D, d M Y H:i:s T';
     const TIMESTAMP_FORMAT       = 'Y-m-d H:i:s';
     const EMULATED               = 'EMULATED';
-    const DEV_STORE_NAME         = 'devstoreaccount1';
-    const DEV_STORE_KEY          = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==';
     const EMULATOR_BLOB_URI      = '127.0.0.1:10000';
     const EMULATOR_QUEUE_URI     = '127.0.0.1:10001';
     const EMULATOR_TABLE_URI     = '127.0.0.1:10002';
@@ -160,12 +208,18 @@ class Resources
     const SERVICE_MANAGEMENT_URL = 'https://management.core.windows.net';
     const HTTP_SCHEME            = 'http';
     const HTTPS_SCHEME           = 'https';
+    const SETTING_NAME = 'SettingName';
+    const SETTING_CONSTRAINT = 'SettingConstraint';
+    const DEV_STORE_URI = 'http://127.0.0.1';
+    const SERVICE_URI_FORMAT = "%s://%s.%s";
+    const WRAP_ENDPOINT_URI_FORMAT = "https://%s-sb.accesscontrol.windows.net/WRAPv0.9";
     
     // Xml Namespaces
     const WA_XML_NAMESPACE   = 'http://schemas.microsoft.com/windowsazure';
     const ATOM_XML_NAMESPACE = 'http://www.w3.org/2005/Atom';
     const DS_XML_NAMESPACE   = 'http://schemas.microsoft.com/ado/2007/08/dataservices';
     const DSM_XML_NAMESPACE  = 'http://schemas.microsoft.com/ado/2007/08/dataservices/metadata';
+    const XSI_XML_NAMESPACE  = 'http://www.w3.org/2001/XMLSchema-instance';
     
 
     // Header values
@@ -174,6 +228,8 @@ class Resources
     const DATA_SERVICE_VERSION_VALUE     = '1.0;NetFx';
     const MAX_DATA_SERVICE_VERSION_VALUE = '2.0;NetFx';
     const ACCEPT_HEADER_VALUE            = 'application/atom+xml,application/xml';
+    const ATOM_ENTRY_CONTENT_TYPE      
+        = 'application/atom+xml;type=entry;charset=utf-8';
     const ACCEPT_CHARSET_VALUE           = 'utf-8';
 
     // Query parameter names
@@ -197,11 +253,23 @@ class Resources
     const QP_BLOCK_LIST_TYPE    = 'blocklisttype';
     const QP_SELECT             = '$select';
     const QP_TOP                = '$top';
+    const QP_SKIP               = '$skip';
     const QP_FILTER             = '$filter';
     const QP_NEXT_TABLE_NAME    = 'NextTableName';
     const QP_NEXT_PK            = 'NextPartitionKey';
     const QP_NEXT_RK            = 'NextRowKey';
     const QP_ACTION             = 'action';
+    const QP_EMBED_DETAIL       = 'embed-detail';
+    
+    // Query parameter values
+    const QPV_REGENERATE = 'regenerate';
+    const QPV_CONFIG     = 'config';
+    const QPV_STATUS     = 'status';
+    const QPV_UPGRADE    = 'upgrade';
+    const QPV_WALK_UPGRADE_DOMAIN = 'walkupgradedomain';
+    const QPV_REBOOT = 'reboot';
+    const QPV_REIMAGE = 'reimage';
+    const QPV_ROLLBACK = 'rollback';
     
     // Request body content types
     const URL_ENCODED_CONTENT_TYPE = 'application/x-www-form-urlencoded';
@@ -238,6 +306,86 @@ class Resources
     const XTAG_KEY_TYPE                   = 'KeyType';
     const XTAG_STORAGE_SERVICE_KEYS       = 'StorageServiceKeys';
     const XTAG_ERROR                      = 'Error';
+    const XTAG_HOSTED_SERVICE             = 'HostedService';
+    const XTAG_HOSTED_SERVICE_PROPERTIES  = 'HostedServiceProperties';
+    const XTAG_CREATE_HOSTED_SERVICE      = 'CreateHostedService';
+    const XTAG_CREATE_STORAGE_SERVICE_INPUT = 'CreateStorageServiceInput';
+    const XTAG_UPDATE_STORAGE_SERVICE_INPUT = 'UpdateStorageServiceInput';
+    const XTAG_CREATE_AFFINITY_GROUP = 'CreateAffinityGroup';
+    const XTAG_UPDATE_AFFINITY_GROUP = 'UpdateAffinityGroup';
+    const XTAG_UPDATE_HOSTED_SERVICE = 'UpdateHostedService';
+    const XTAG_PACKAGE_URL = 'PackageUrl';
+    const XTAG_CONFIGURATION = 'Configuration';
+    const XTAG_START_DEPLOYMENT = 'StartDeployment';
+    const XTAG_TREAT_WARNINGS_AS_ERROR = 'TreatWarningsAsError';
+    const XTAG_CREATE_DEPLOYMENT = 'CreateDeployment';
+    const XTAG_DEPLOYMENT_SLOT = 'DeploymentSlot';
+    const XTAG_PRIVATE_ID = 'PrivateID';
+    const XTAG_ROLE_INSTANCE_LIST = 'RoleInstanceList';
+    const XTAG_UPGRADE_DOMAIN_COUNT = 'UpgradeDomainCount';
+    const XTAG_ROLE_LIST = 'RoleList';
+    const XTAG_SDK_VERSION = 'SdkVersion';
+    const XTAG_INPUT_ENDPOINT_LIST = 'InputEndpointList';
+    const XTAG_LOCKED = 'Locked';
+    const XTAG_ROLLBACK_ALLOWED = 'RollbackAllowed';
+    const XTAG_UPGRADE_STATUS = 'UpgradeStatus';
+    const XTAG_UPGRADE_TYPE = 'UpgradeType';
+    const XTAG_CURRENT_UPGRADE_DOMAIN_STATE = 'CurrentUpgradeDomainState';
+    const XTAG_CURRENT_UPGRADE_DOMAIN = 'CurrentUpgradeDomain';
+    const XTAG_ROLE_NAME = 'RoleName';
+    const XTAG_INSTANCE_NAME = 'InstanceName';
+    const XTAG_INSTANCE_STATUS = 'InstanceStatus';
+    const XTAG_INSTANCE_UPGRADE_DOMAIN = 'InstanceUpgradeDomain';
+    const XTAG_INSTANCE_FAULT_DOMAIN = 'InstanceFaultDomain';
+    const XTAG_INSTANCE_SIZE = 'InstanceSize';
+    const XTAG_INSTANCE_STATE_DETAILS = 'InstanceStateDetails';
+    const XTAG_INSTANCE_ERROR_CODE = 'InstanceErrorCode';
+    const XTAG_OS_VERSION = 'OsVersion';
+    const XTAG_ROLE_INSTANCE = 'RoleInstance';
+    const XTAG_ROLE = 'Role';
+    const XTAG_INPUT_ENDPOINT = 'InputEndpoint';
+    const XTAG_VIP = 'Vip';
+    const XTAG_PORT = 'Port';
+    const XTAG_DEPLOYMENT = 'Deployment';
+    const XTAG_DEPLOYMENTS = 'Deployments';
+    const XTAG_REGENERATE_KEYS = 'RegenerateKeys';
+    const XTAG_SWAP = 'Swap';
+    const XTAG_PRODUCTION = 'Production';
+    const XTAG_SOURCE_DEPLOYMENT = 'SourceDeployment';
+    const XTAG_CHANGE_CONFIGURATION = 'ChangeConfiguration';
+    const XTAG_MODE = 'Mode';
+    const XTAG_UPDATE_DEPLOYMENT_STATUS = 'UpdateDeploymentStatus';
+    const XTAG_ROLE_TO_UPGRADE = 'RoleToUpgrade';
+    const XTAG_FORCE = 'Force';
+    const XTAG_UPGRADE_DEPLOYMENT = 'UpgradeDeployment';
+    const XTAG_UPGRADE_DOMAIN = 'UpgradeDomain';
+    const XTAG_WALK_UPGRADE_DOMAIN = 'WalkUpgradeDomain';
+    const XTAG_ROLLBACK_UPDATE_OR_UPGRADE = 'RollbackUpdateOrUpgrade';
+
+    // Service Bus
+    const LIST_TOPICS_PATH        = '$Resources/Topics';
+    const LIST_QUEUES_PATH        = '$Resources/Queues';
+    const LIST_RULES_PATH         = '%s/subscriptions/%s/rules';
+    const LIST_SUBSCRIPTIONS_PATH = '%s/subscriptions';
+    const RECEIVE_MESSAGE_PATH    = '%s/messages/head';
+    const RECEIVE_SUBSCRIPTION_MESSAGE_PATH = '%s/subscriptions/%s/messages/head';
+    const SEND_MESSAGE_PATH       = '%s/messages';
+    const RULE_PATH               = '%s/subscriptions/%s/rules/%s';
+    const SUBSCRIPTION_PATH       = '%s/subscriptions/%s';
+    const DEFAULT_RULE_NAME       = '$Default';
+    const UNIQUE_ID_PREFIX        = 'urn:uuid:';
+    const SERVICE_BUS_NAMESPACE   = 'http://schemas.microsoft.com/netservices/2010/10/servicebus/connect';
+    const BROKER_PROPERTIES       = 'BrokerProperties';
+    const XMLNS_ATOM              = 'xmlns:atom';
+    const XMLNS                   = 'xmlns';
+    const ATOM_NAMESPACE          = 'http://www.w3.org/2005/Atom';
+
+    // ATOM string 
+    const AUTHOR      = 'author';
+    const CATEGORY    = 'category';
+    const CONTRIBUTOR = 'contributor';
+    const ENTRY       = 'entry';
+    const LINK        = 'link';
 
     // PHP URL Keys
     const PHP_URL_SCHEME   = 'scheme';
@@ -261,9 +409,8 @@ class Resources
     const SSL_VERIFY_PEER = 'ssl_verify_peer';
     const SSL_VERIFY_HOST = 'ssl_verify_host';
     const SSL_LOCAL_CERT  = 'ssl_local_cert';
+    const SSL_CAFILE      = 'ssl_cafile';
     const CONNECT_TIMEOUT = 'connect_timeout';
     
     // @codingStandardsIgnoreEnd
 }
-
-?>
