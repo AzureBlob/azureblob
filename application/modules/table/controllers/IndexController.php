@@ -41,8 +41,48 @@ class Table_IndexController extends Zend_Controller_Action
         ));
     }
 
+    public function addEntityAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $this->view->table = $table;
+    }
+
+    public function createEntityAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $partitionKey = $this->getRequest()->getParam('partition', null);
+        $rowKey = $this->getRequest()->getParam('row', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'], 
+            $this->_session->creds['account_key']
+        );
+        $azureBlob->createEntity($table, $partitionKey, $rowKey);
+        return $this->_helper->redirector('browse', 'index', 'table', array ('table' => $table));
+    }
+
+    public function removeEntityAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $partitionKey = $this->getRequest()->getParam('partition', null);
+        $rowKey = $this->getRequest()->getParam('row', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'], 
+            $this->_session->creds['account_key']
+        );
+        $azureBlob->removeEntity($table, $partitionKey, $rowKey);
+        return $this->_helper->redirector('browse', 'index', 'table', array ('table' => $table));
+    }
+
 
 }
+
+
+
+
+
+
 
 
 

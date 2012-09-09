@@ -22,6 +22,8 @@ use WindowsAzure\Common\ServiceException;
 use WindowsAzure\Blob\Models\PublicAccessType;
 use WindowsAzure\Blob\Models\CreateContainerOptions;
 use WindowsAzure\Blob\Models\CreateBlobOptions;
+use WindowsAzure\Table\Models\Entity;
+use WindowsAzure\Table\Models\EdmType;
 
 /**
  * AzureBlob
@@ -66,59 +68,54 @@ class Application_Service_AzureBlob
             $this->setAccountKey($accountKey);
         }
     }
+    /**
+     * Sets the account name for this Windows Azure storage Service
+     * 
+     * @param string $accountName
+     * @return Application_Service_AzureBlob 
+     */
     public function setAccountName($accountName)
     {
         $this->_accountName = (string) $accountName;
         return $this;
     }
+    /**
+     * Retrieves the account name from this Windows Azure Storage Service
+     * 
+     * @return string
+     */
     public function getAccountName()
     {
         return $this->_accountName;
     }
+    /**
+     * Sets the primary account key for this Windows Azure Storage Service
+     * 
+     * @param string $accountKey
+     * @return Application_Service_AzureBlob 
+     */
     public function setAccountKey($accountKey)
     {
         $this->_accountKey = (string) $accountKey;
         return $this;
     }
+    /**
+     * Retrieves the primary account key from this Windows Azure Storage Service
+     * 
+     * @return string
+     */
     public function getAccountKey()
     {
         return $this->_accountKey;
     }
     /**
-     * Creates a configuration object for this Widnows Azure Blob Service
+     * Creates a connection string for this Widnows Azure Storage Service
      * 
-     * @return Configuration
+     * @return string
      * @access protected
      */
     protected function _getConfig()
     {
-        /*
-        $types = array ('blob', 'table', 'queue');
-        if (!in_array($type, $types)) {
-            throw new Exception('Invalid storage type provided');
-        }
-        $config = new Configuration();
-        switch ($type) {
-            case 'blob':
-                $config->setProperty(BlobSettings::ACCOUNT_NAME, $this->_accountName);
-                $config->setProperty(BlobSettings::ACCOUNT_KEY, $this->_accountKey);
-                $config->setProperty(BlobSettings::URI, sprintf('http://%s.%s',
-                        $this->_accountName, self::WASA_BLOB_URI));
-                break;
-            case 'table':
-                $config->setProperty(TableSettings::ACCOUNT_NAME, $this->_accountName);
-                $config->setProperty(TableSettings::ACCOUNT_KEY, $this->_accountKey);
-                $config->setProperty(TableSettings::URI, sprintf('http://%s.%s',
-                        $this->_accountName, self::WASA_TABLE_URI));
-                break;
-            case 'queue':
-                $config->setProperty(QueueSettings::ACCOUNT_NAME, $this->_accountName);
-                $config->setProperty(QueueSettings::ACCOUNT_KEY, $this->_accountKey);
-                $config->setProperty(QueueSettings::URI, sprintf('http://%s.%s',
-                        $this->_accountName, self::WASA_QUEUE_URI));
-                break;
-        }
-        */
         $config = sprintf(
             'DefaultEndpointsProtocol=%s;AccountName=%s;AccountKey=%s',
             'http',
@@ -293,11 +290,48 @@ class Application_Service_AzureBlob
         $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
         $entities = array ();
         try {
-            $entities = $tableRestProxy->queryEntities($table);
+            $entityList = $tableRestProxy->queryEntities($table);
+            $entities = $entityList->getEntities();
         } catch (ServiceException $e) {
             throw $e;
         }
         return $entities;
+    }
+    /**
+     * Creates an entity to store data values in
+     * 
+     * @param string $table
+     * @param string $partitionKey
+     * @param string $rowKey
+     * @return boolean 
+     */
+    public function createEntity($table, $partitionKey, $rowKey)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $success = false;
+        
+        $entity = new Entity;
+        $entity->setPartitionKey($partitionKey);
+        $entity->setRowKey($rowKey);
+        
+        try {
+            $tableRestProxy->insertEntity($table, $entity);
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $success;
+    }
+    public function removeEntity($table, $partitionKey, $rowKey)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $success = false;
+        
+        try {
+            $tableRestProxy->deleteEntity($table, $partitionKey, $rowKey);
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $success;
     }
     /**
      * Lists the queues in a Windows Azure Queue Storage account

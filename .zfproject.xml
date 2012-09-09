@@ -84,6 +84,9 @@
               <actionMethod actionName="index"/>
               <actionMethod actionName="list"/>
               <actionMethod actionName="browse"/>
+              <actionMethod actionName="addEntity"/>
+              <actionMethod actionName="createEntity"/>
+              <actionMethod actionName="removeEntity"/>
             </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
@@ -102,6 +105,15 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="browse"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="addEntity"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="createEntity"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="removeEntity"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
@@ -215,6 +227,9 @@
                 <testApplicationActionMethod forActionName="remove"/>
                 <testApplicationActionMethod forActionName="list"/>
                 <testApplicationActionMethod forActionName="browse"/>
+                <testApplicationActionMethod forActionName="addEntity"/>
+                <testApplicationActionMethod forActionName="createEntity"/>
+                <testApplicationActionMethod forActionName="removeEntity"/>
               </testApplicationControllerFile>
             </testApplicationControllerDirectory>
           </testApplicationModuleDirectory>
