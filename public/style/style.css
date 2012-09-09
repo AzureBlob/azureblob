@@ -53,6 +53,8 @@ div#splash {
 .metro_white_bg { background: white; }
 .metro_white_fg { color: white; }
 
+.ui-widget-overlay { opacity: 0.7; background: black; }
+
 /** specific style settings **/
 div#containerSwitchForm { float: left; width: 250px; }
 div#addBlob { }

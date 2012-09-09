@@ -17,21 +17,11 @@
  */
 require_once 'WindowsAzure/WindowsAzure.php';
 
-use WindowsAzure\Common\Configuration;
-use WindowsAzure\Blob\Models\CreateContainerOptions;
-use WindowsAzure\Blob\Models\PublicAccessType;
-use WindowsAzure\Blob\Models\CreateBlobOptions;
-use WindowsAzure\Blob\BlobSettings;
-use WindowsAzure\Blob\BlobService;
-use WindowsAzure\Table\Models\TableServiceOptions;
-use WindowsAzure\Table\Models\QueryEntitiesOptions;
-use WindowsAzure\Table\TableSettings;
-use WindowsAzure\Table\TableService;
-use WindowsAzure\Queue\Models\CreateQueueOptions;
-use WindowsAzure\Queue\Models\CreateMessageOptions;
-use WindowsAzure\Queue\QueueSettings;
-use WindowsAzure\Queue\QueueService;
+use WindowsAzure\Common\ServicesBuilder;
 use WindowsAzure\Common\ServiceException;
+use WindowsAzure\Blob\Models\PublicAccessType;
+use WindowsAzure\Blob\Models\CreateContainerOptions;
+use WindowsAzure\Blob\Models\CreateBlobOptions;
 
 /**
  * AzureBlob
@@ -97,12 +87,12 @@ class Application_Service_AzureBlob
     /**
      * Creates a configuration object for this Widnows Azure Blob Service
      * 
-     * @param string $type
      * @return Configuration
      * @access protected
      */
-    protected function _getConfig($type)
+    protected function _getConfig()
     {
+        /*
         $types = array ('blob', 'table', 'queue');
         if (!in_array($type, $types)) {
             throw new Exception('Invalid storage type provided');
@@ -128,6 +118,13 @@ class Application_Service_AzureBlob
                         $this->_accountName, self::WASA_QUEUE_URI));
                 break;
         }
+        */
+        $config = sprintf(
+            'DefaultEndpointsProtocol=%s;AccountName=%s;AccountKey=%s',
+            'http',
+            $this->getAccountName(),
+            $this->getAccountKey()
+        );
         return $config;
     }
     /**
@@ -138,7 +135,7 @@ class Application_Service_AzureBlob
      */
     public function listContainers()
     {
-        $blobRestProxy = BlobService::create($this->_getConfig('blob'));
+        $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->_getConfig());
         $containers = array ();
         try {
             $containerList = $blobRestProxy->listContainers();
@@ -159,7 +156,7 @@ class Application_Service_AzureBlob
      */
     public function createContainer($label, $accessType = PublicAccessType::CONTAINER_AND_BLOBS, $metaData = null)
     {
-        $blobRestProxy = BlobService::create($this->_getConfig('blob'));
+        $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->_getConfig());
         
         $containerOptions = new CreateContainerOptions();
         $containerOptions->setPublicAccess($accessType);
@@ -187,7 +184,7 @@ class Application_Service_AzureBlob
      */
     public function removeContainer($label)
     {
-        $blobRestProxy = BlobService::create($this->_getConfig('blob'));
+        $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->_getConfig());
         $success = false;
         try {
             $blobRestProxy->deleteContainer($label);
@@ -206,7 +203,7 @@ class Application_Service_AzureBlob
      */
     public function listBlobs($container)
     {
-        $blobRestProxy = BlobService::create($this->_getConfig('blob'));
+        $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->_getConfig());
         $blobs = array ();
         try {
             $blobList = $blobRestProxy->listBlobs($container);
@@ -229,7 +226,7 @@ class Application_Service_AzureBlob
     public function addBlob($container, $blobName, $data, $options = null)
     {
         $blobName = str_replace(' ', '_', $blobName);
-        $blobRestProxy = BlobService::create($this->_getConfig('blob'));
+        $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->_getConfig());
         $success = false;
         
         if (null !== $options) {
@@ -258,7 +255,7 @@ class Application_Service_AzureBlob
      */
     public function removeBlob($container, $blobName)
     {
-        $blobRestProxy = BlobService::create($this->_getConfig('blob'));
+        $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->_getConfig());
         $success = false;
         try {
             $blobRestProxy->deleteBlob($container, $blobName);
@@ -276,13 +273,14 @@ class Application_Service_AzureBlob
      */
     public function listTables()
     {
-        $tableRestProxy = TableService::create($this->_getConfig('table'));
+        $tableRestProxy = WindowsAzure\Common\ServicesBuilder::getInstance()->createTableService($this->_getConfig());
         $tables = array ();
         try {
-            
+            $tables = $tableRestProxy->queryTables();
         } catch (ServiceException $e) {
             throw $e;
         }
+        return $tables;
     }
     /**
      * Lists the queues in a Windows Azure Queue Storage account

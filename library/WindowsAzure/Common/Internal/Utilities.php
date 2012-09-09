@@ -62,6 +62,8 @@ class Utilities
      * @param string $url    The URL.
      * @param string $scheme The scheme. By default HTTP
      * 
+     * @static
+     * 
      * @return string
      */
     public static function tryAddUrlScheme($url, $scheme = 'http')
@@ -151,15 +153,21 @@ class Utilities
     /**
      * Checks if the passed $string starts with $prefix
      *
-     * @param string $string word to seaech in
-     * @param string $prefix prefix to be matched
+     * @param string  $string     word to seaech in
+     * @param string  $prefix     prefix to be matched
+     * @param boolean $ignoreCase true to ignore case during the comparison; 
+     * otherwise, false
      * 
      * @static
      * 
-     * @return bool
+     * @return boolean
      */
-    public static function startsWith($string, $prefix)
+    public static function startsWith($string, $prefix, $ignoreCase = false)
     {
+        if ($ignoreCase) {
+            $string = strtolower($string);
+            $prefix = strtolower($prefix);
+        }
         return ($prefix == substr($string, 0, strlen($prefix)));
     }
     
@@ -241,6 +249,8 @@ class Utilities
      * @param string $defaultTag default tag for non-tagged elements.
      * @param string $standalone adds 'standalone' header tag, values 'yes'/'no'
      * 
+     * @static
+     * 
      * @return string
      */
     public static function serialize($array, $rootName, $defaultTag = null,
@@ -311,6 +321,8 @@ class Utilities
      * 
      * @param string $obj boolean value in string format.
      * 
+     * @static
+     * 
      * @return bool
      */
     public static function toBoolean($obj)
@@ -322,6 +334,8 @@ class Utilities
      * Converts string into boolean value.
      * 
      * @param bool $obj boolean value to convert.
+     * 
+     * @static
      * 
      * @return string
      */
@@ -335,6 +349,8 @@ class Utilities
      * 
      * @param string $date windows azure date ins string represntation.
      * 
+     * @static
+     * 
      * @return \DateTime
      */
     public static function rfc1123ToDateTime($date)
@@ -346,24 +362,12 @@ class Utilities
     }
 
     /**
-     * Checks if the given key exists in the array, with any
-     * capitaliation.
-     *
-     * @param string $key    Value to check.
-     * @param array  $search An array with keys to check.
-     *
-     * @return boolean
-     */
-    public static function arrayKeyExistsIgnoreCase($key, array $search)
-    {
-        return array_key_exists(strtolower($key), array_change_key_case($search));
-    }
-
-    /**
      * Generate ISO 8601 compliant date string in UTC time zone
      * 
      * @param int $timestamp The unix timestamp to convert 
      *     (for DateTime check date_timestamp_get).
+     * 
+     * @static
      *
      * @return string
      */
@@ -389,6 +393,8 @@ class Utilities
      * 
      * @param \DateTime $value The datetime value.
      * 
+     * @static
+     * 
      * @return string
      */
     public static function convertToEdmDateTime($value) 
@@ -413,6 +419,8 @@ class Utilities
      * 
      * @param string $value The string value to parse.
      * 
+     * @static
+     * 
      * @return \DateTime
      */
     public static function convertToDateTime($value)
@@ -432,6 +440,8 @@ class Utilities
      * Converts string to stream handle.
      * 
      * @param type $string The string contents.
+     * 
+     * @static
      * 
      * @return resource
      */
@@ -460,6 +470,138 @@ class Utilities
         
         return $ordered;
     }
-}
+    
+    /**
+     * Checks if a value exists in an array. The comparison is done in a case
+     * insensitive manner.
+     * 
+     * @param string $needle   The searched value.
+     * @param array  $haystack The array.
+     * 
+     * @static
+     * 
+     * @return boolean 
+     */
+    public static function inArrayInsensitive($needle, $haystack)
+    {
+        return in_array(strtolower($needle), array_map('strtolower', $haystack));
+    }
+    
+    /**
+     * Checks if the given key exists in the array. The comparison is done in a case
+     * insensitive manner.
+     * 
+     * @param string $key    The value to check.
+     * @param array  $search The array with keys to check.
+     * 
+     * @static
+     * 
+     * @return boolean 
+     */
+    public static function arrayKeyExistsInsensitive($key, $search)
+    {
+        return array_key_exists(strtolower($key), array_change_key_case($search));
+    }
+    
+    /**
+     * Returns the specified value of the $key passed from $array and in case that
+     * this $key doesn't exist, the default value is returned. The key matching is
+     * done in a case insensitive manner.
+     *
+     * @param string $key      The array key.
+     * @param array  $haystack The array to be used.
+     * @param mix    $default  The value to return if $key is not found in $array.
+     * 
+     * @static
+     * 
+     * @return mix
+     */
+    public static function tryGetValueInsensitive($key, $haystack, $default = null)
+    {
+        $array = array_change_key_case($haystack);
+        return Utilities::tryGetValue($array, strtolower($key), $default);
+    }
+    
+    /**
+     * Returns a string representation of a version 4 GUID, which uses random
+     * numbers.There are 6 reserved bits, and the GUIDs have this format:
+     *     xxxxxxxx-xxxx-4xxx-[8|9|a|b]xxx-xxxxxxxxxxxx
+     * where 'x' is a hexadecimal digit, 0-9a-f.
+     *
+     * See http://tools.ietf.org/html/rfc4122 for more information.
+     *
+     * Note: This function is available on all platforms, while the
+     * com_create_guid() is only available for Windows.
+     *
+     * @static
+     * 
+     * @return string A new GUID.
+     */
+    public static function getGuid()
+    {
+        return sprintf('%04x%04x-%04x-%04x-%02x%02x-%04x%04x%04x',
+            mt_rand(0, 65535),
+            mt_rand(0, 65535),        // 32 bits for "time_low"
+            mt_rand(0, 65535),        // 16 bits for "time_mid"
+            mt_rand(0, 4096) + 16384, // 16 bits for "time_hi_and_version", with
+                                      // the most significant 4 bits being 0100
+                                      // to indicate randomly generated version
+            mt_rand(0, 64) + 128,     // 8 bits  for "clock_seq_hi", with
+                                      // the most significant 2 bits being 10,
+                                      // required by version 4 GUIDs.
+            mt_rand(0, 256),          // 8 bits  for "clock_seq_low"
+            mt_rand(0, 65535),        // 16 bits for "node 0" and "node 1"
+            mt_rand(0, 65535),        // 16 bits for "node 2" and "node 3"
+            mt_rand(0, 65535)         // 16 bits for "node 4" and "node 5"
+        );
+    }
+    
+    /**
+     * Creates a list of objects of type $class from the provided array using static
+     * create method.
+     * 
+     * @param array  $parsed The object in array representation
+     * @param string $class  The class name. Must have static method create.
+     * 
+     * @static
+     * 
+     * @return array
+     */
+    public static function createInstanceList($parsed, $class)
+    {
+        $list = array();
+        
+        foreach ($parsed as $value) {
+            $list[] = $class::create($value);
+        }
+        
+        return $list;
+    }
+    
+    /**
+     * Takes a string and return if it ends with the specified character/string.
+     * 
+     * @param string  $haystack   The string to search in.
+     * @param string  $needle     postfix to match.
+     * @param boolean $ignoreCase Set true to ignore case during the comparison; 
+     * otherwise, false
+     * 
+     * @static
+     * 
+     * @return boolean 
+     */
+    public static function endsWith($haystack, $needle, $ignoreCase = false)
+    {
+        if ($ignoreCase) {
+            $haystack = strtolower($haystack);
+            $needle   = strtolower($needle);
+        }
+        $length = strlen($needle);
+        if ($length == 0) {
+            return true;
+        }
 
-?>
+        return (substr($haystack, -$length) === $needle);
+    }
+
+}
