@@ -273,7 +273,7 @@ class Application_Service_AzureBlob
      */
     public function listTables()
     {
-        $tableRestProxy = WindowsAzure\Common\ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
         $tables = array ();
         try {
             $tables = $tableRestProxy->queryTables();
@@ -281,6 +281,23 @@ class Application_Service_AzureBlob
             throw $e;
         }
         return $tables;
+    }
+    /**
+     * Lists all entities in a given table
+     * 
+     * @param string $table
+     * @return array
+     */
+    public function listEntities($table)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $entities = array ();
+        try {
+            $entities = $tableRestProxy->queryEntities($table);
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $entities;
     }
     /**
      * Lists the queues in a Windows Azure Queue Storage account

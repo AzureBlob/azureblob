@@ -2,7 +2,8 @@
 
 class Table_IndexController extends Zend_Controller_Action
 {
-    protected $_session;
+
+    protected $_session = null;
 
     public function init()
     {
@@ -26,8 +27,24 @@ class Table_IndexController extends Zend_Controller_Action
         $this->view->tables = $tables;
     }
 
+    public function browseAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'], 
+            $this->_session->creds['account_key']
+        );
+        $entities = $azureBlob->listEntities($table);
+        $this->view->assign(array (
+            'table' => $table,
+            'entities' => $entities,
+        ));
+    }
+
 
 }
+
+
 
 
 

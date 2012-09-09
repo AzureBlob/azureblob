@@ -1,0 +1,62 @@
+<?php $this->headTitle($this->translate('Windows Azure Table Storage for table %s', $this->table)) ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/jquery/js/jquery-1.8.0.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/js/jquery-ui-1.8.23.custom.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/development-bundle/ui/minified/jquery.ui.widget.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/plugins/File-Upload/js/jquery.iframe-transport.js'))
+                         ->appendFile($this->baseUrl('/jquery/plugins/File-Upload/js/jquery.fileupload.js')); ?>
+<?php $this->headLink()->prependStylesheet($this->baseUrl('/jquery/css/redmond/jquery-ui-1.8.23.custom.css')); ?>
+<?php $this->headScript()->appendScript(<<<EOS
+
+$(document).ready(function () {
+
+    // Dialog
+    $('#dialog').dialog({
+        autoOpen: false,
+        width: 600,
+        modal: true,
+        title: "Add an entity to table {$this->escape($this->table)}",
+    });
+    $('#preview').dialog({
+        autoOpen: false,
+        width: 600,
+        modal: true
+    });
+
+    // open the dialog to upload files
+    $('#addEntity').click(function () {
+        $('#dialog').dialog('open');
+        return false;
+    });
+
+});
+
+EOS
+); ?>
+
+<h1 class="pageTitle"><?php echo $this->translate('Windows Azure Table Storage for table %s', $this->table) ?></h1>
+
+<div id="addEntity" class="icon floatRight"><a id="addEntityLink" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'add-entity', 'table' => $this->table), null, true) ?>" title="Add a new Entity to this table"><span class="ui-icon ui-icon-circle-plus" style="display:inline-block;">+</span></a></div>
+
+<div class="clear">&nbsp;</div>
+
+<dl class="blobList">
+    <dt class="title large metro_blue_fg metro_black_bg">Entity key</dt>
+    <dd class="title medium  metro_blue_fg metro_black_bg">Row key</dd>
+    <dd class="title metro_blue_fg metro_black_bg">Actions</dd>
+
+<?php foreach ($this->entities as $entity): ?>
+
+    <dt class="data large"><?php echo $this->escape($entity->getPartitionKey()) ?></dt>
+    <dd class="data medium"><?php echo $this->escape($this->$entity->getRowKey()) ?></dd>
+    <dd class="data center">
+        <a href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'remove-entity', 'partition' => $entity->getPartitionKey()), null, true) ?>" title="Remove <?php echo $this->escape($entity->getPartitionKey()) ?>" onClick="return confirm('Are you sure you want to delete <?php echo $this->escape($entity->getPartitionKey()) ?>?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a>
+    </dd>
+<?php endforeach; ?>
+
+</dl>
+<div class="clear">&nbsp;</div>
+
+<div id="dialog">
+    <p><?php echo $this->translate('Needs to be implemented') ?></p>
+</div>

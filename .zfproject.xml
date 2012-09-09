@@ -83,6 +83,7 @@
             <controllerFile controllerName="Index">
               <actionMethod actionName="index"/>
               <actionMethod actionName="list"/>
+              <actionMethod actionName="browse"/>
             </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
@@ -98,6 +99,9 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="list"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="browse"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
@@ -210,6 +214,7 @@
                 <testApplicationActionMethod forActionName="retrieve"/>
                 <testApplicationActionMethod forActionName="remove"/>
                 <testApplicationActionMethod forActionName="list"/>
+                <testApplicationActionMethod forActionName="browse"/>
               </testApplicationControllerFile>
             </testApplicationControllerDirectory>
           </testApplicationModuleDirectory>
