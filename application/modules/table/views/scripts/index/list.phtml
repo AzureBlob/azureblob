@@ -1,10 +1,4 @@
 <?php $this->headTitle($this->translate('Windows Azure Table Storage')) ?>
-<<<<<<< HEAD
-
-<h1><?php echo $this->translate('Windows Azure Table Storage') ?></h1>
-
-<?php var_dump($this->tables); ?>
-=======
 <?php $this->headScript()->appendFile($this->baseUrl('/jquery/js/jquery-1.8.0.min.js'))
                          ->appendFile($this->baseUrl('/jquery/js/jquery-ui-1.8.23.custom.min.js'))?>
 <?php $this->headLink()->prependStylesheet($this->baseUrl('/jquery/css/redmond/jquery-ui-1.8.23.custom.css')); ?>
@@ -64,9 +58,8 @@ EOS
 
 <div id="dialog">
     <form id="tableForm" action="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'create-table'), null, true) ?>" method="post">
-    <label for="tableName">Table name</label>:
-    <input type="text" name="tableName" id="containerName" value="" />
-    <input type="submit" value="Create table" />
-</form>
+        <label for="tableName">Table name</label>:
+        <input type="text" name="tableName" id="containerName" value="" />
+        <input type="submit" value="Create table" />
+    </form>
 </div>
->>>>>>> master
