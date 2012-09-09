@@ -29,6 +29,8 @@ use WindowsAzure\Common\Internal\IServiceFilter;
 use WindowsAzure\Common\Internal\Authentication\SharedKeyAuthScheme;
 use WindowsAzure\Common\Internal\Authentication\TableSharedKeyLiteAuthScheme;
 use WindowsAzure\Common\Internal\InvalidArgumentTypeException;
+use WindowsAzure\ServiceBus\Internal\WrapTokenManager;
+
 
 /**
  * Adds WRAP authentication header to the http request object.
@@ -51,23 +53,22 @@ class WrapFilter implements IServiceFilter
     /**
      * Creates a WrapFilter with specified WRAP parameters.
      *
-     * @param string $wrapUri      The URI of the WRAP service. 
-     * @param string $wrapUsername The user name of the WRAP account.
-     * @param string $wrapPassword The password of the WRAP account.
-     * 
-     * @return
-     * WindowsAzure\Common\Internal\Filter\WrapFilter
-     *         
+     * @param string $wrapUri       The URI of the WRAP service. 
+     * @param string $wrapUsername  The user name of the WRAP account.
+     * @param string $wrapPassword  The password of the WRAP account.
+     * @param IWrap  $wrapRestProxy The WRAP service REST proxy.
      */
     public function __construct(
         $wrapUri, 
         $wrapUsername, 
-        $wrapPassword
+        $wrapPassword,
+        $wrapRestProxy
     ) {
         $this->_wrapTokenManager = new WrapTokenManager(
             $wrapUri, 
             $wrapUsername, 
-            $wrapPassword
+            $wrapPassword,
+            $wrapRestProxy
         );
     }
 
@@ -109,4 +110,4 @@ class WrapFilter implements IServiceFilter
     }
 }
 
-?>
+

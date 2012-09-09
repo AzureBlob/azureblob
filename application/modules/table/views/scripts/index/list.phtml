@@ -1,0 +1,65 @@
+<?php $this->headTitle($this->translate('Windows Azure Table Storage')) ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/jquery/js/jquery-1.8.0.min.js'))
+                         ->appendFile($this->baseUrl('/jquery/js/jquery-ui-1.8.23.custom.min.js'))?>
+<?php $this->headLink()->prependStylesheet($this->baseUrl('/jquery/css/redmond/jquery-ui-1.8.23.custom.css')); ?>
+<?php $this->headScript()->appendScript(<<<EOS
+
+$(document).ready(function() {
+
+    $('#dialog').dialog({
+        autoOpen: false,
+        width: 600,
+        modal: true,
+        title: "Create a new table",
+    });
+    
+    $('#tableForm').submit(function () {
+        var tableName = $(this.tableName).val();
+        var url = $(this).attr('action');
+        $.post(url, { "tableName": tableName }, function () {
+            document.location.href = "{$this->url(array (
+                'module' => 'table',
+                'controller' => 'index',
+                'action' => 'list',
+            ), null, true)}";
+        });
+        console.log($(this));
+        $('#dialog').dialog('close');
+        return false;
+    });
+    
+    $('a#addTableLink').click(function() {
+        $('#dialog').dialog('open');
+        return false;
+    });
+});
+EOS
+) ?>
+<h1 class="pageTitle"><?php echo $this->translate('Windows Azure Table Storage') ?></h1>
+
+<div id="addTable" class="icon floatRight"><a id="addTableLink" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'add-table'), null, true) ?>" title="Add a new table to this storage"><span class="ui-icon ui-icon-circle-plus" style="display:inline-block;">+</span></a></div>
+
+<div class="clear">&nbsp;</div>
+
+<dl class="blobList">
+    <dt class="title large metro_blue_fg metro_black_bg">Table</dt>
+    <dd class="title small metro_blue_fg metro_black_bg">Last modified</dd>
+    <dd class="title metro_blue_fg metro_black_bg">Actions</dd>
+
+<?php foreach ($this->tables as $table): ?>
+
+    <dt class="data large"><a class="metro_white_fg" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'browse', 'table' => $table), null, true) ?>" title="<?php echo $this->escape($this->substring($table)) ?>"><?php echo $this->escape($this->substring($table)) ?></a></dt>
+    <dd class="data medium"><?php echo $this->escape('hoi') ?></dd>
+    <dd class="data center"><a href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'remove-table', 'table' => $table), null, true) ?>" title="Remove <?php echo $this->escape($table) ?>" onClick="return confirm('Are you sure you want to delete <?php echo $this->escape($table) ?>?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
+<?php endforeach; ?>
+
+</dl>
+<div class="clear">&nbsp;</div>
+
+<div id="dialog">
+    <form id="tableForm" action="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'create-table'), null, true) ?>" method="post">
+        <label for="tableName">Table name</label>:
+        <input type="text" name="tableName" id="containerName" value="" />
+        <input type="submit" value="Create table" />
+    </form>
+</div>
