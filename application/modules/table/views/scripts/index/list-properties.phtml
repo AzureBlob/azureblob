@@ -37,11 +37,19 @@ EOS
 <h1 class="pageTitle"><?php echo $this->translate('Windows Azure Table Storage for table %s', $this->table) ?></h1>
 
 <div id="containerSwitchForm">
-    <a class="floatLeft" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'list'), null, true) ?>" title="Overview of containers"><span class="ui-icon ui-icon-circle-arrow-w" style="display: inline-block">&lt;-</span></a>
+    <a class="floatLeft" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'browse', 'table' => $this->table), null, true) ?>" title="Overview of containers"><span class="ui-icon ui-icon-circle-arrow-w" style="display: inline-block">&lt;-</span></a>
 </div>
 <div id="addEntity" class="icon floatRight"><a id="addEntityLink" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'add-entity', 'table' => $this->table), null, true) ?>" title="Add a new Entity to this table"><span class="ui-icon ui-icon-circle-plus" style="display:inline-block;">+</span></a></div>
 
 <div class="clear">&nbsp;</div>
+
+<?php 
+$entity = $this->entity; 
+if ($entity instanceof WindowsAzure\Table\Models\Entity) {
+    Zend_Debug::dump($entity->getProperties());
+}
+die; 
+?>
 
 <dl class="blobList">
     <dt class="title large metro_blue_fg metro_black_bg">Entity key</dt>
@@ -54,7 +62,6 @@ EOS
     <dd class="data medium"><?php echo $this->escape($entity->getRowKey()) ?></dd>
     <dd class="data center">
         <a href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'remove-entity', 'table' => $this->table, 'partition' => $entity->getPartitionKey(), 'row' => $entity->getRowKey()), null, true) ?>" title="Remove <?php echo $this->escape($entity->getPartitionKey()) ?>" onClick="return confirm('Are you sure you want to delete <?php echo $this->escape($entity->getPartitionKey()) ?>?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a>
-        <a href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'list-properties', 'table' => $this->table, 'partition' => $entity->getPartitionKey(), 'row' => $entity->getRowKey()), null, true) ?>" title="Details of <?php echo $this->escape($entity->getPartitionKey()) ?>" ><span class="ui-icon ui-icon-circle-arrow-e" style="display: inline-block">-</span></a>
     </dd>
 <?php endforeach; ?>
 
