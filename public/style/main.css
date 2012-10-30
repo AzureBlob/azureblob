@@ -17,7 +17,7 @@ a { text-decoration: none; color: #71B1D1; }
 #footer { background: white; color: black; padding: 50px 0 20px 0; }
 
 #topBar { padding: 0 25px; }
-span#logo { font-weight: bold; }
+span#logo { font-weight: bold; font-size: xx-large; margin: 15px 0; }
 
 div#splash {
     background: transparent url("http://plopster.blob.core.windows.net/plopstore/boysgarden_500x400.png") no-repeat scroll 0 0;

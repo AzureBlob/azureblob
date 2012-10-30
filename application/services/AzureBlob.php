@@ -298,6 +298,26 @@ class Application_Service_AzureBlob
         return $entities;
     }
     /**
+     * Retrieves a single entity from a partition
+     * 
+     * @param string $table
+     * @param string $partitionKey
+     * @param string $rowKey
+     * @return WindowsAzure\Table\Model\Entity
+     */
+    public function getEntity($table, $partitionKey, $rowKey)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $entity = null;
+        try {
+            $entityResult = $tableRestProxy->getEntity($table, $partitionKey, $rowKey);
+            $entity = $entityResult->getEntity();
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $entity;
+    }
+    /**
      * Creates an entity to store data values in
      * 
      * @param string $table
@@ -330,6 +350,40 @@ class Application_Service_AzureBlob
             $tableRestProxy->deleteEntity($table, $partitionKey, $rowKey);
         } catch (ServiceException $e) {
             throw $e;
+        }
+        return $success;
+    }
+    /**
+     * Adds a property to an existing entity
+     * 
+     * @param string $table
+     * @param string $partionKey
+     * @param string $rowKey
+     * @param string $name
+     * @param string $value
+     * @param null|string $emdType
+     * @return boolean 
+     */
+    public function addProperty($table, $partitionKey, $rowKey, $name, $value, $emdType = null)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $success = false;
+        $entity = null;
+        
+        try {
+            $entity = $tableRestProxy->getEntity($table, $partitionKey, $rowKey);
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        
+        if ($entity instanceof Entity) {
+            $entity->addProperty($name, $edmType, $value);
+            try {
+                $tableRestProxy->insertOrMergeEntity($table, $entity);
+                $success = true;
+            } catch (ServiceException $e) {
+                throw $e;
+            }
         }
         return $success;
     }

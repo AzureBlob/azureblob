@@ -11,13 +11,14 @@ a { text-decoration: none; color: #71B1D1; }
 #master { width: 1000px; text-align: left; margin: 0 auto; }
 
 #header { height: 50px; background: white; color: black; }
-#header a { color: black; font-family: "Segoe UI Semibold"; }
+#header a { font-family: "Segoe UI Semibold"; }
 
-#center { min-height: 500px; }
+#center { min-height: 500px; clear: both; }
 #footer { background: white; color: black; padding: 50px 0 20px 0; }
 
 #topBar { padding: 0 25px; }
-span#logo { font-weight: bold; }
+span#logo { font-weight: bold; font-size: xx-large; margin: 15px 0; }
+span#logo a { color: black; }
 
 div#splash {
     background: transparent url("http://plopster.blob.core.windows.net/plopstore/boysgarden_500x400.png") no-repeat scroll 0 0;
@@ -54,6 +55,13 @@ div#splash {
 .metro_white_fg { color: white; }
 
 .ui-widget-overlay { opacity: 0.7; background: black; }
+
+/** navigation styling **/
+ul.navigation { list-style: none; }
+ul.navigation li { float: left; display: inline-block; width: 120px; }
+ul.navigation li a { color: black; }
+ul.navigation li a:hover { color: #71B1D1; }
+ul.navigation li.active a { color: #71B1D1; }
 
 /** specific style settings **/
 div#containerSwitchForm { float: left; width: 250px; }

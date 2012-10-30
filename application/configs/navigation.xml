@@ -1,82 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <navigation>
-        <mgmt>
-            <label>Management</label>
-            <title>Manage access</title>
-            <module>default</module>
+        <blobs>
+            <label>Blobs</label>
+            <title>Manage your blob storage</title>
+            <module>blob</module>
             <controller>index</controller>
-            <action>index</action>
-        </mgmt>
-        <control>
-            <label>Control</label>
-            <title>Controle</title>
-            <module>default</module>
+            <action>container</action>
+        </blobs>
+        <tables>
+            <label>Tables</label>
+            <title>Manage your blob storage</title>
+            <module>table</module>
             <controller>index</controller>
-            <action>index</action>
-        </control>
-        <checkin>
-            <label>Checking In</label>
-            <title>Checking in of vehicles</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </checkin>
-        <purchase>
-            <label>Purchase</label>
-            <title>Purchasing vehicles</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </purchase>
-        <mis>
-            <label>MIS</label>
-            <title>Marketing Information System</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </mis>
-        <orders>
-            <label>Orders</label>
-            <title>Orders</title>
-            <module>order</module>
-            <controller>index</controller>
-            <action>index</action>
-        </orders>
-        <relations>
-            <label>Relations</label>
-            <title>Relations</title>
-            <module>relation</module>
-            <controller>index</controller>
-            <action>index</action>
-        </relations>
-        <tickets>
-            <label>Tickets</label>
-            <title>Tickets</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </tickets>
-        <transport>
-            <label>Transport</label>
-            <title>Transport</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </transport>
-        <stock>
-            <label>Stock</label>
-            <title>Stock</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </stock>
-        <bam>
-            <label>BAM</label>
-            <title>BAM</title>
-            <module>default</module>
-            <controller>index</controller>
-            <action>index</action>
-        </bam>
+            <action>list</action>
+        </tables>
     </navigation>
 </config>
