@@ -75,8 +75,76 @@ class Table_IndexController extends Zend_Controller_Action
         return $this->_helper->redirector('browse', 'index', 'table', array ('table' => $table));
     }
 
+    public function addPropertyAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $partitionKey = $this->getRequest()->getParam('partition', null);
+        $rowKey = $this->getRequest()->getParam('row', null);
+        
+        $types = array (
+            WindowsAzure\Table\Models\EdmType::BINARY => 'Binary',
+            WindowsAzure\Table\Models\EdmType::BOOLEAN => 'Boolean',
+            WindowsAzure\Table\Models\EdmType::DATETIME => 'DateTime',
+            WindowsAzure\Table\Models\EdmType::DOUBLE => 'Double',
+            WindowsAzure\Table\Models\EdmType::GUID => 'Guid',
+            WindowsAzure\Table\Models\EdmType::INT32 => 'Integer (32bit)',
+            WindowsAzure\Table\Models\EdmType::INT64 => 'Integer (64bit)',
+            WindowsAzure\Table\Models\EdmType::STRING => 'String',
+        );
+        
+        $this->view->assign(array (
+            'table' => $table,
+            'partition' => $partitionKey,
+            'row' => $rowKey,
+            'types' => $types,
+        ));
+    }
+
+    public function listPropertiesAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $partitionKey = $this->getRequest()->getParam('partition', null);
+        $rowKey = $this->getRequest()->getParam('row', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'], 
+            $this->_session->creds['account_key']
+        );
+        
+        $entity = $azureBlob->getEntity($table, $partitionKey, $rowKey);
+        $this->view->assign(array (
+            'table' => $table,
+            'partition' => $partitionKey,
+            'row' => $rowKey,
+            'entity' => $entity,
+        ));
+    }
+
+    public function createPropertyAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        $partitionKey = $this->getRequest()->getParam('partition', null);
+        $rowKey = $this->getRequest()->getParam('row', null);
+        $name = $this->getRequest()->getParam('name', null);
+        $value = $this->getRequest()->getParam('value', null);
+        $type = $this->getRequest()->getParam('type', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'], 
+            $this->_session->creds['account_key']
+        );
+        $azureBlob->addProperty($table, $partitionKey, $rowKey, $name, $value, $type);
+        return $this->_helper->redirector('browse', 'index', 'table', array ('table' => $table));
+    }
+
 
 }
+
+
+
+
+
+
 
 
 

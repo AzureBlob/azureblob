@@ -7,6 +7,7 @@ class IndexController extends Zend_Controller_Action
     public function init()
     {
         $this->_session = new Zend_Session_Namespace(Application_Service_AzureBlob::WASA_SERVICE);
+        $this->_helper->layout()->setLayout('layout_splash');
     }
 
     public function indexAction()
