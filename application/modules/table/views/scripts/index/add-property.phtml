@@ -1,0 +1,24 @@
+<?php $this->headTitle($this->translate('Creating a property for table %s (entity %s - row %s)', $this->table, $this->partition, $this->row)) ?>
+
+<h1><?php echo $this->translate('Creating a property for table %s (entity %s - row %s)', $this->table, $this->partition, $this->row) ?></h1>
+
+<form id="propertyForm" action="<?php echo $this->url(array (
+    'module' => 'table',
+    'controller' => 'index',
+    'action' => 'create-property',
+), null, true) ?>" method="post">
+    <label for="name">Property name</label>:
+    <input type="text" name="name" id="name"/><br/>
+    <label for="value">Property value</label>:
+    <input type="text" name="value" id="value"/><br/>
+    <label for="type">Property type</label>:
+    <select name="type" id="type">
+        <?php foreach ($this->types as $type => $string): ?>
+        <option value="<?php echo $this->escape($type) ?>"><?php echo $this->escape($string) ?></option>
+        <?php endforeach; ?>
+    </select><br/>
+    <input type="hidden" name="table" value="<?php echo $this->escape($this->table) ?>"/>
+    <input type="hidden" name="partition" value="<?php echo $this->escape($this->partition) ?>"/>
+    <input type="hidden" name="row" value="<?php echo $this->escape($this->row) ?>"/>
+    <input type="submit" value="Set property"/>
+</form>
