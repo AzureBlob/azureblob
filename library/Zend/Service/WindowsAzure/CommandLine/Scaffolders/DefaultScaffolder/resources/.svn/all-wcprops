@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources
+END
+ServiceConfiguration.cscfg
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/ServiceConfiguration.cscfg
+END
+ServiceDefinition.csdef
+K 25
+svn:wc:ra_dav:version-url
+V 170
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/ServiceDefinition.csdef
+END

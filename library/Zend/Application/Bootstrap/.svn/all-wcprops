@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Application/Bootstrap
+END
+ResourceBootstrapper.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Application/Bootstrap/ResourceBootstrapper.php
+END
+Bootstrap.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Application/Bootstrap/Bootstrap.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Application/Bootstrap/Exception.php
+END
+BootstrapAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Application/Bootstrap/BootstrapAbstract.php
+END
+Bootstrapper.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Application/Bootstrap/Bootstrapper.php
+END

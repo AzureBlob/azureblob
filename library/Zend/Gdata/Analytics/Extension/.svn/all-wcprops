@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Gdata/Analytics/Extension
+END
+Goal.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Gdata/Analytics/Extension/Goal.php
+END
+Metric.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Gdata/Analytics/Extension/Metric.php
+END
+Property.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Gdata/Analytics/Extension/Property.php
+END
+TableId.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Gdata/Analytics/Extension/TableId.php
+END
+Dimension.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Gdata/Analytics/Extension/Dimension.php
+END

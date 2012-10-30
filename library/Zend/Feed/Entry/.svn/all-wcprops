@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Feed/Entry
+END
+Atom.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Feed/Entry/Atom.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Feed/Entry/Abstract.php
+END
+Rss.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Feed/Entry/Rss.php
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Ldap/Node
+END
+Collection.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Ldap/Node/Collection.php
+END
+RootDse.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Ldap/Node/RootDse.php
+END
+Schema.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Ldap/Node/Schema.php
+END
+ChildrenIterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Ldap/Node/ChildrenIterator.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Ldap/Node/Abstract.php
+END

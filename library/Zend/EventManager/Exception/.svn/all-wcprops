@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/EventManager/Exception
+END
+InvalidArgumentException.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/EventManager/Exception/InvalidArgumentException.php
+END

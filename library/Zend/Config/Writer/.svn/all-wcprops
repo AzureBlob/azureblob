@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/framework/!svn/ver/25024/standard/branches/release-1.12/library/Zend/Config/Writer
+END
+Json.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Config/Writer/Json.php
+END
+Array.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Config/Writer/Array.php
+END
+Ini.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Config/Writer/Ini.php
+END
+Xml.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Config/Writer/Xml.php
+END
+Yaml.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Config/Writer/Yaml.php
+END
+FileAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Config/Writer/FileAbstract.php
+END

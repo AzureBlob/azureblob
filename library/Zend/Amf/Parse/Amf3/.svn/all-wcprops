@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Amf/Parse/Amf3
+END
+Serializer.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Amf/Parse/Amf3/Serializer.php
+END
+Deserializer.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Amf/Parse/Amf3/Deserializer.php
+END

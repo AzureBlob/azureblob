@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server
+END
+Reflection.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server/Reflection.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server/Exception.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server/Interface.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server/Abstract.php
+END
+Cache.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server/Cache.php
+END
+Definition.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Server/Definition.php
+END

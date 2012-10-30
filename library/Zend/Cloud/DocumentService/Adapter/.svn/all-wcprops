@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Cloud/DocumentService/Adapter
+END
+SimpleDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Cloud/DocumentService/Adapter/SimpleDb.php
+END
+WindowsAzure.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure.php
+END
+AbstractAdapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/framework/!svn/ver/24965/standard/branches/release-1.12/library/Zend/Cloud/DocumentService/Adapter/AbstractAdapter.php
+END
