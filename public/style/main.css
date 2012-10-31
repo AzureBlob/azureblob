@@ -25,7 +25,8 @@ h2 {padding-top:10px;}
 span#logo { font-weight: bold; font-size: xx-large; margin: 15px 0; }
 
 div#splash {
-    background: transparent url("http://plopster.blob.core.windows.net/plopstore/boysgarden_500x400.png") no-repeat scroll 0 0;
+    /* background: transparent url("http://plopster.blob.core.windows.net/plopstore/boysgarden_500x400.png") no-repeat scroll 0 0;*/
+    background: transparent url('http://plopster.blob.core.windows.net/plopstore/azure.png') no-repeat scroll 0 0;
     color: #FFFFFF;
     font-family: "Segoe UI","Helvetica",Garuda,Arial,sans-serif;
     font-weight: 100;
