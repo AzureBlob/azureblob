@@ -8,7 +8,7 @@ class Application_View_Helper_Substring extends Zend_View_Helper_Abstract
     {
         $this->_view = $view;
     }
-    public function substring($string, $maxLength = 35)
+    public function substring($string, $maxLength = 30)
     {
         if ($maxLength < strlen($string)) {
             $halfLength = ($maxLength / 2) - 4;
