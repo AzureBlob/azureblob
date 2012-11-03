@@ -400,17 +400,13 @@ class Application_Service_AzureBlob
      * @param null|string $emdType
      * @return boolean 
      */
-    public function addProperty($table, $partitionKey, $rowKey, $name, $value, $emdType = null)
+    public function addProperty($table, $partitionKey, $rowKey, $name, $value, $edmType = null)
     {
         $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
         $success = false;
         $entity = null;
         
-        try {
-            $entity = $tableRestProxy->getEntity($table, $partitionKey, $rowKey);
-        } catch (ServiceException $e) {
-            throw $e;
-        }
+        $entity = $this->getEntity($table, $partitionKey, $rowKey);
         
         if ($entity instanceof Entity) {
             $entity->addProperty($name, $edmType, $value);

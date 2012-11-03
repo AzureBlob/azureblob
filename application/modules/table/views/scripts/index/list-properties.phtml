@@ -67,7 +67,7 @@ EOS
         <form id="entityForm" action="<?php echo $this->url(array (
             'module' => 'table',
             'controller' => 'index',
-            'action' => 'create-entity',
+            'action' => 'add-property',
         ), null, true) ?>" method="post">
             <label for="propertyKey">PropertyKey</label>:
             <input type="text" name="propertyKey" id="propertyKey"/><br/>
@@ -81,6 +81,7 @@ EOS
             <input type="text" name="value" id="value"/><br/>
             <input type="hidden" name="table" value="<?php echo $this->escape($this->table) ?>"/>
             <input type="hidden" name="partition" value="<?php echo $this->escape($this->partition) ?>"/>
+            <input type="hidden" name="row" value="<?php echo $this->escape($this->row) ?>"/>
             <input type="submit" value="Add entity"/>
         </form>
     </div>

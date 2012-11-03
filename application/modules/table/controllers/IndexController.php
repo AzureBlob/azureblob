@@ -80,15 +80,20 @@ class Table_IndexController extends Zend_Controller_Action
         $table = $this->getRequest()->getParam('table', null);
         $partitionKey = $this->getRequest()->getParam('partition', null);
         $rowKey = $this->getRequest()->getParam('row', null);
+        $name = $this->getRequest()->getParam('propertyKey', null);
+        $edmType = $this->getRequest()->getParam('propertyType', 'Edm.String');
+        $value = $this->getRequest()->getParam('value', null);
         
-        $types = Application_Service_AzureBlob::getPropertyTypes();
+//        Zend_Debug::dump($this->getAllParams());die;
         
-        $this->view->assign(array (
-            'table' => $table,
-            'partition' => $partitionKey,
-            'row' => $rowKey,
-            'types' => $types,
-        ));
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'],
+            $this->_session->creds['account_key']
+        );
+        
+        $azureBlob->addProperty($table, $partitionKey, $rowKey, $name, $value, $edmType);
+        
+        return $this->_helper->redirector('list-properties', 'index', 'table', array ('table' => $table, 'partition' => $partitionKey, 'row' => $rowKey));
     }
 
     public function listPropertiesAction()
