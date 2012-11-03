@@ -460,4 +460,17 @@ class Application_Service_AzureBlob
         }
         return $messages;
     }
+    public static function getPropertyTypes()
+    {
+        return array (
+            EdmType::STRING => 'String',
+            EdmType::BINARY => 'Binary',
+            EdmType::BOOLEAN => 'Boolean',
+            EdmType::DATETIME => 'DateTime',
+            EdmType::DOUBLE => 'Double',
+            EdmType::GUID => 'Guid',
+            EdmType::INT32 => 'Integer (32bit)',
+            EdmType::INT64 => 'Integer (64bit)',
+        );
+    }
 }

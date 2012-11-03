@@ -81,16 +81,7 @@ class Table_IndexController extends Zend_Controller_Action
         $partitionKey = $this->getRequest()->getParam('partition', null);
         $rowKey = $this->getRequest()->getParam('row', null);
         
-        $types = array (
-            WindowsAzure\Table\Models\EdmType::BINARY => 'Binary',
-            WindowsAzure\Table\Models\EdmType::BOOLEAN => 'Boolean',
-            WindowsAzure\Table\Models\EdmType::DATETIME => 'DateTime',
-            WindowsAzure\Table\Models\EdmType::DOUBLE => 'Double',
-            WindowsAzure\Table\Models\EdmType::GUID => 'Guid',
-            WindowsAzure\Table\Models\EdmType::INT32 => 'Integer (32bit)',
-            WindowsAzure\Table\Models\EdmType::INT64 => 'Integer (64bit)',
-            WindowsAzure\Table\Models\EdmType::STRING => 'String',
-        );
+        $types = Application_Service_AzureBlob::getPropertyTypes();
         
         $this->view->assign(array (
             'table' => $table,
@@ -111,12 +102,15 @@ class Table_IndexController extends Zend_Controller_Action
             $this->_session->creds['account_key']
         );
         
+        $types = Application_Service_AzureBlob::getPropertyTypes();
+        
         $entity = $azureBlob->getEntity($table, $partitionKey, $rowKey);
         $this->view->assign(array (
-            'table' => $table,
+            'table'     => $table,
             'partition' => $partitionKey,
             'row' => $rowKey,
             'entity' => $entity,
+            'propertyTypes' => $types,
         ));
     }
 
