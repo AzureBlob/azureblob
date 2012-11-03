@@ -398,7 +398,8 @@ class Application_Service_AzureBlob
      * @param string $name
      * @param string $value
      * @param null|string $emdType
-     * @return boolean 
+     * @return boolean
+     * @todo Convert values into corresponding edm types (Utilities class)
      */
     public function addProperty($table, $partitionKey, $rowKey, $name, $value, $edmType = null)
     {
