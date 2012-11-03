@@ -137,8 +137,35 @@ class Table_IndexController extends Zend_Controller_Action
         return $this->_helper->redirector('browse', 'index', 'table', array ('table' => $table));
     }
 
+    public function removeTableAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+                $this->_session->creds['account_name'],
+                $this->_session->creds['account_key']
+        );
+        $azureBlob->dropTable($table);
+        return $this->_helper->redirector('list', 'index', 'table');
+    }
+
+    public function createTableAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+                $this->_session->creds['account_name'],
+                $this->_session->creds['account_key']
+        );
+        $azureBlob->createTable($table);
+    }
+
 
 }
+
+
+
+
 
 
 

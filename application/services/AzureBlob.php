@@ -280,6 +280,42 @@ class Application_Service_AzureBlob
         return $tables;
     }
     /**
+     * Creates a new table with a given name
+     * 
+     * @param string $tableName The name of the table (e.g. 'user', 'product', ...)
+     * @return string
+     * @throws ServiceException
+     */
+    public function createTable($tableName)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        try {
+            $table = $tableRestProxy->createTable($tableName);
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $table;
+    }
+    /**
+     * Deletes a table (and all contents in it) from the table storage
+     * 
+     * @param string $tableName The name of the table (e.g. 'user', 'product', ...)
+     * @return boolean
+     * @throws ServiceException
+     */
+    public function dropTable($tableName)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $success = false;
+        try {
+            $tableRestProxy->deleteTable($tableName);
+            $success = true;
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $success;
+    }
+    /**
      * Lists all entities in a given table
      * 
      * @param string $table

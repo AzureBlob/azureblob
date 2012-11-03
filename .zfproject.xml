@@ -90,6 +90,8 @@
               <actionMethod actionName="addProperty"/>
               <actionMethod actionName="listProperties"/>
               <actionMethod actionName="createProperty"/>
+              <actionMethod actionName="removeTable"/>
+              <actionMethod actionName="createTable"/>
             </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
@@ -126,6 +128,12 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="createProperty"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="removeTable"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="createTable"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
@@ -245,6 +253,8 @@
                 <testApplicationActionMethod forActionName="addProperty"/>
                 <testApplicationActionMethod forActionName="listProperties"/>
                 <testApplicationActionMethod forActionName="createProperty"/>
+                <testApplicationActionMethod forActionName="removeTable"/>
+                <testApplicationActionMethod forActionName="createTable"/>
               </testApplicationControllerFile>
             </testApplicationControllerDirectory>
           </testApplicationModuleDirectory>
