@@ -75,6 +75,20 @@ class Blob_IndexController extends Zend_Controller_Action
 
     public function uploadBlobAction()
     {
+        var_dump($_FILES);
+        if (isset ($_FILES['file']['tmp_name'])) {
+            $basename = substr($_FILES['file']['tmp_name'], 0, strrpos($_FILES['file']['tmp_name'], '/'));
+            $it = new DirectoryIterator($basename);
+            $cnt = 0;
+            while($it->valid()) {
+                if ($it->isDot()) continue;
+                $cnt++;
+                $it->next();
+            }
+        }
+        var_dump($it);
+
+        die;
         $results = array ();
         if (!empty ($_FILES)){
             foreach ($_FILES['file']['error'] as $key => $error) {
@@ -115,7 +129,12 @@ class Blob_IndexController extends Zend_Controller_Action
         return $this->_helper->redirector('container', 'index', 'blob');
     }
 
-
+    public function cdnAction()
+    {
+        $azureBlob = new Application_Service_AzureBlob($this->_session->creds['account_name'], $this->_session->creds['account_key']);
+        $cdn = $azureBlob->getCdn();
+        Zend_Debug::dump($cdn);die;
+    }
 }
 
 

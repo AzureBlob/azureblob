@@ -549,4 +549,6 @@ interface IServiceManagement extends FilterableService
      * @see http://msdn.microsoft.com/en-us/library/windowsazure/hh403977.aspx
      */
     public function rollbackUpdateOrUpgrade($name, $mode, $force, $options);
+    
+    public function listCdnEndpoints();
 }

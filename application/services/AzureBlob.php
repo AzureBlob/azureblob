@@ -457,17 +457,32 @@ class Application_Service_AzureBlob
         }
         return $messages;
     }
+    public function getCdn()
+    {
+        $cdn = null;
+        $connectionString = sprintf('SubscriptionID=%s;CertificatePath=%s',
+            '662b5848-7074-44fe-b704-c23afd5bfd10',
+            APPLICATION_PATH . '/../mycert.pem');
+        $mgmtRestProxy = ServicesBuilder::getInstance()->createServiceManagementService($connectionString);
+        
+        $service = $mgmtRestProxy->listStorageServices();
+        Zend_Debug::dump($service->getStorageServices());
+        
+        $cdn = $mgmtRestProxy->listCdnEndpoints();
+        Zend_Debug::dump($cdn);
+        die;
+    }
     public static function getPropertyTypes()
     {
         return array (
-            EdmType::STRING => 'String',
-            EdmType::BINARY => 'Binary',
-            EdmType::BOOLEAN => 'Boolean',
+            EdmType::STRING   => 'String',
+            EdmType::BINARY   => 'Binary',
+            EdmType::BOOLEAN  => 'Boolean',
             EdmType::DATETIME => 'DateTime',
-            EdmType::DOUBLE => 'Double',
-            EdmType::GUID => 'Guid',
-            EdmType::INT32 => 'Integer (32bit)',
-            EdmType::INT64 => 'Integer (64bit)',
+            EdmType::DOUBLE   => 'Double',
+            EdmType::GUID     => 'Guid',
+            EdmType::INT32    => 'Integer (32bit)',
+            EdmType::INT64    => 'Integer (64bit)',
         );
     }
 }
