@@ -76,17 +76,14 @@ class Blob_IndexController extends Zend_Controller_Action
     public function uploadBlobAction()
     {
         var_dump($_FILES);
-        if (isset ($_FILES['file']['tmp_name'])) {
-            $basename = substr($_FILES['file']['tmp_name'], 0, strrpos($_FILES['file']['tmp_name'], '/'));
+        if (isset ($_FILES['file']['tmp_name'][0])) {
+            $basename = substr($_FILES['file']['tmp_name'][0], 0, strrpos($_FILES['file']['tmp_name'][0], '/'));
             $it = new DirectoryIterator($basename);
-            $cnt = 0;
-            while($it->valid()) {
-                if ($it->isDot()) continue;
-                $cnt++;
+            while ($it->valid()) {
+                var_dump($it->getPathname());
                 $it->next();
             }
         }
-        var_dump($it);
 
         die;
         $results = array ();
