@@ -361,6 +361,7 @@ class Resources
     const XTAG_UPGRADE_DOMAIN = 'UpgradeDomain';
     const XTAG_WALK_UPGRADE_DOMAIN = 'WalkUpgradeDomain';
     const XTAG_ROLLBACK_UPDATE_OR_UPGRADE = 'RollbackUpdateOrUpgrade';
+    const XTAG_STORAGE_SERVICE_CDN = 'StorageServiceCdnEndpoints';
 
     // Service Bus
     const LIST_TOPICS_PATH        = '$Resources/Topics';

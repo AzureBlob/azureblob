@@ -280,6 +280,42 @@ class Application_Service_AzureBlob
         return $tables;
     }
     /**
+     * Creates a new table with a given name
+     * 
+     * @param string $tableName The name of the table (e.g. 'user', 'product', ...)
+     * @return string
+     * @throws ServiceException
+     */
+    public function createTable($tableName)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        try {
+            $table = $tableRestProxy->createTable($tableName);
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $table;
+    }
+    /**
+     * Deletes a table (and all contents in it) from the table storage
+     * 
+     * @param string $tableName The name of the table (e.g. 'user', 'product', ...)
+     * @return boolean
+     * @throws ServiceException
+     */
+    public function dropTable($tableName)
+    {
+        $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
+        $success = false;
+        try {
+            $tableRestProxy->deleteTable($tableName);
+            $success = true;
+        } catch (ServiceException $e) {
+            throw $e;
+        }
+        return $success;
+    }
+    /**
      * Lists all entities in a given table
      * 
      * @param string $table
@@ -362,19 +398,16 @@ class Application_Service_AzureBlob
      * @param string $name
      * @param string $value
      * @param null|string $emdType
-     * @return boolean 
+     * @return boolean
+     * @todo Convert values into corresponding edm types (Utilities class)
      */
-    public function addProperty($table, $partitionKey, $rowKey, $name, $value, $emdType = null)
+    public function addProperty($table, $partitionKey, $rowKey, $name, $value, $edmType = null)
     {
         $tableRestProxy = ServicesBuilder::getInstance()->createTableService($this->_getConfig());
         $success = false;
         $entity = null;
         
-        try {
-            $entity = $tableRestProxy->getEntity($table, $partitionKey, $rowKey);
-        } catch (ServiceException $e) {
-            throw $e;
-        }
+        $entity = $this->getEntity($table, $partitionKey, $rowKey);
         
         if ($entity instanceof Entity) {
             $entity->addProperty($name, $edmType, $value);
@@ -423,5 +456,33 @@ class Application_Service_AzureBlob
             throw $e;
         }
         return $messages;
+    }
+    public function getCdn()
+    {
+        $cdn = null;
+        $connectionString = sprintf('SubscriptionID=%s;CertificatePath=%s',
+            '662b5848-7074-44fe-b704-c23afd5bfd10',
+            APPLICATION_PATH . '/../mycert.pem');
+        $mgmtRestProxy = ServicesBuilder::getInstance()->createServiceManagementService($connectionString);
+        
+        $service = $mgmtRestProxy->listStorageServices();
+        Zend_Debug::dump($service->getStorageServices());
+        
+        $cdn = $mgmtRestProxy->listCdnEndpoints();
+        Zend_Debug::dump($cdn);
+        die;
+    }
+    public static function getPropertyTypes()
+    {
+        return array (
+            EdmType::STRING   => 'String',
+            EdmType::BINARY   => 'Binary',
+            EdmType::BOOLEAN  => 'Boolean',
+            EdmType::DATETIME => 'DateTime',
+            EdmType::DOUBLE   => 'Double',
+            EdmType::GUID     => 'Guid',
+            EdmType::INT32    => 'Integer (32bit)',
+            EdmType::INT64    => 'Integer (64bit)',
+        );
     }
 }

@@ -80,24 +80,20 @@ class Table_IndexController extends Zend_Controller_Action
         $table = $this->getRequest()->getParam('table', null);
         $partitionKey = $this->getRequest()->getParam('partition', null);
         $rowKey = $this->getRequest()->getParam('row', null);
+        $name = $this->getRequest()->getParam('propertyKey', null);
+        $edmType = $this->getRequest()->getParam('propertyType', 'Edm.String');
+        $value = $this->getRequest()->getParam('value', null);
         
-        $types = array (
-            WindowsAzure\Table\Models\EdmType::BINARY => 'Binary',
-            WindowsAzure\Table\Models\EdmType::BOOLEAN => 'Boolean',
-            WindowsAzure\Table\Models\EdmType::DATETIME => 'DateTime',
-            WindowsAzure\Table\Models\EdmType::DOUBLE => 'Double',
-            WindowsAzure\Table\Models\EdmType::GUID => 'Guid',
-            WindowsAzure\Table\Models\EdmType::INT32 => 'Integer (32bit)',
-            WindowsAzure\Table\Models\EdmType::INT64 => 'Integer (64bit)',
-            WindowsAzure\Table\Models\EdmType::STRING => 'String',
+//        Zend_Debug::dump($this->getAllParams());die;
+        
+        $azureBlob = new Application_Service_AzureBlob(
+            $this->_session->creds['account_name'],
+            $this->_session->creds['account_key']
         );
         
-        $this->view->assign(array (
-            'table' => $table,
-            'partition' => $partitionKey,
-            'row' => $rowKey,
-            'types' => $types,
-        ));
+        $azureBlob->addProperty($table, $partitionKey, $rowKey, $name, $value, $edmType);
+        
+        return $this->_helper->redirector('list-properties', 'index', 'table', array ('table' => $table, 'partition' => $partitionKey, 'row' => $rowKey));
     }
 
     public function listPropertiesAction()
@@ -111,12 +107,15 @@ class Table_IndexController extends Zend_Controller_Action
             $this->_session->creds['account_key']
         );
         
+        $types = Application_Service_AzureBlob::getPropertyTypes();
+        
         $entity = $azureBlob->getEntity($table, $partitionKey, $rowKey);
         $this->view->assign(array (
-            'table' => $table,
+            'table'     => $table,
             'partition' => $partitionKey,
             'row' => $rowKey,
             'entity' => $entity,
+            'propertyTypes' => $types,
         ));
     }
 
@@ -137,8 +136,35 @@ class Table_IndexController extends Zend_Controller_Action
         return $this->_helper->redirector('browse', 'index', 'table', array ('table' => $table));
     }
 
+    public function removeTableAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+                $this->_session->creds['account_name'],
+                $this->_session->creds['account_key']
+        );
+        $azureBlob->dropTable($table);
+        return $this->_helper->redirector('list', 'index', 'table');
+    }
+
+    public function createTableAction()
+    {
+        $table = $this->getRequest()->getParam('table', null);
+        
+        $azureBlob = new Application_Service_AzureBlob(
+                $this->_session->creds['account_name'],
+                $this->_session->creds['account_key']
+        );
+        $azureBlob->createTable($table);
+    }
+
 
 }
+
+
+
+
 
 
 
