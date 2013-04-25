@@ -1,4 +1,4 @@
-<?php $this->headTitle($this->translate('Windows Azure Table Storage for table %s', $this->table)) ?>
+<?php $this->headTitle($this->translate('WATS for table "%s"', $this->table)) ?>
 
 <?php $this->headScript()->appendFile($this->baseUrl('/jquery/js/jquery-1.8.0.min.js'))
                          ->appendFile($this->baseUrl('/jquery/js/jquery-ui-1.8.23.custom.min.js'))
@@ -34,7 +34,7 @@ $(document).ready(function () {
 EOS
 ); ?>
 
-<h1 class="pageTitle"><?php echo $this->translate('Windows Azure Table Storage for table %s', $this->table) ?></h1>
+<h1 class="pageTitle"><?php echo $this->translate('WATS for table "%s"', $this->table) ?></h1>
 
 <div id="containerSwitchForm">
     <a class="floatLeft" href="<?php echo $this->url(array ('module' => 'table', 'controller' => 'index', 'action' => 'list'), null, true) ?>" title="Overview of containers"><span class="ui-icon ui-icon-circle-arrow-w" style="display: inline-block">&lt;-</span></a>

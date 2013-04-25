@@ -75,6 +75,7 @@ class Blob_IndexController extends Zend_Controller_Action
 
     public function uploadBlobAction()
     {
+        $logger = $this->getInvokeArg('bootstrap')->getResource('log');
         $results = array ();
         if (!empty ($_FILES)){
             foreach ($_FILES['file']['error'] as $key => $error) {
@@ -83,22 +84,42 @@ class Blob_IndexController extends Zend_Controller_Action
                     'type' => $_FILES['file']['type'][$key],
                     'size' => $_FILES['file']['size'][$key],
                     'tmp_name' => $_FILES['file']['tmp_name'][$key]);
+                $logger->info(sprintf(
+                    'Processing uploaded file %s with size %d',
+                    $file['name'],
+                    $file['size']
+                ));
 
                 if (UPLOAD_ERR_OK === $error && is_uploaded_file($file['tmp_name'])) {
                     //move_uploaded_file($file['tmp_name'], sprintf('./uploads/%s', $file['name']));
                     $file['name'] = str_replace(' ', '_', $file['name']);
                     $contents = file_get_contents($file['tmp_name']);
                     $azureBlob = new Application_Service_AzureBlob($this->_session->creds['account_name'], $this->_session->creds['account_key']);
-                    $azureBlob->addBlob(
-                        $this->_session->lastContainer, 
-                        $file['name'], 
-                        $contents, 
-                        array ('content-type' => $file['type'])
-                    );
-                    $results[] = sprintf('You have uploaded %s of type %s and size %d bytes',
-                        $file['name'],
-                        $file['type'],
-                        $file['size']);
+                    $logger->info(sprintf(
+                        'Pushing file %s to Windows Azure blob storage',
+                        $file['name']
+                    ));
+                    try {
+                        $azureBlob->addBlob(
+                            $this->_session->lastContainer,
+                            $file['name'],
+                            $contents,
+                            array ('content-type' => $file['type'])
+                        );
+                        $logger->info(sprintf(
+                            'Uploaded file %s of type %s into %s',
+                            $file['name'],
+                            $file['type'],
+                            $this->_session->lastContainer
+                        ));
+                        $results[] = sprintf('You have uploaded %s of type %s and size %d bytes',
+                            $file['name'],
+                            $file['type'],
+                            $file['size']);
+                    } catch (\WindowsAzure\Common\ServiceException $exception) {
+                        $logger->crit($exception->getMessage());
+                        $logger->warn($exception->getTraceAsString());
+                    }
                 }
             }
         }
@@ -115,7 +136,11 @@ class Blob_IndexController extends Zend_Controller_Action
         return $this->_helper->redirector('container', 'index', 'blob');
     }
 
-
+    public function cdnAction()
+    {
+        $azureBlob = new Application_Service_AzureBlob($this->_session->creds['account_name'], $this->_session->creds['account_key']);
+        $cdn = $azureBlob->getCdn();
+    }
 }
 
 

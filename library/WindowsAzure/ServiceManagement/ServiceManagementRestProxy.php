@@ -51,6 +51,7 @@ use WindowsAzure\ServiceManagement\Models\CreateDeploymentOptions;
 use WindowsAzure\ServiceManagement\Models\GetDeploymentResult;
 use WindowsAzure\ServiceManagement\Models\DeploymentStatus;
 use WindowsAzure\ServiceManagement\Models\Mode;
+use WindowsAzure\ServiceManagement\Models\GetStorageServiceCdnResult;
 
 /**
  * This class constructs HTTP requests and receive HTTP responses for service 
@@ -195,6 +196,17 @@ class ServiceManagementRestProxy extends RestProxy
     {
         $path = "services/hostedservices/$name/deployments";
         return $this->_getPath($path, $deploymentName);
+    }
+    /**
+     * Retrieves a listing of registered CDN endpoints.
+     * 
+     * @param string $name The hosted service name.
+     * @return array
+     */
+    private function _getCdnEndpointsPath($name = null)
+    {
+        $path = "services/cdn/endpoints";
+        return $this->_getPath($path, $name);
     }
     
     private function _getRoleInstancePath($name, $options, $roleName)
@@ -1500,5 +1512,20 @@ class ServiceManagementRestProxy extends RestProxy
         $response = $this->sendContext($context);
         
         return AsynchronousOperationResult::create($response->getHeader());
+    }
+    
+    public function listCdnEndpoints()
+    {
+        $context = new HttpCallContext();
+        $context->setMethod(Resources::HTTP_GET);
+        $context->setPath($this->_getCdnEndpointsPath());
+        $context->addStatusCode(Resources::STATUS_OK);
+        
+//        echo '<pre>' . var_export($context,1) . '</pre>';die;
+        
+        $response   = $this->sendContext($context);
+        $serialized = $this->dataSerializer->unserialize($response->getBody());
+        
+        return GetStorageServiceCdnResult::create($serialized);
     }
 }
