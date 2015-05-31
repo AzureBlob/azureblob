@@ -1,0 +1,70 @@
+{% extends 'main.twig' %}
+
+{% block head %}
+{{ parent() }}
+    <link href="{{ app.request.baseUrl }}/assets/css/jquery-ui.min.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="{{ app.request.baseUrl }}/assets/css/jquery-ui.structure.min.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="{{ app.request.baseUrl }}/assets/css/jquery-ui.theme.min.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="{{ app.request.baseUrl }}/assets/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="{{ app.request.baseUrl }}/assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function() {
+
+        $('#dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            modal: true,
+        });
+
+        $('#preview').dialog({
+            autoOpen: false,
+            width: 600,
+            modal: true
+        });
+
+        $('#containerForm').submit(function () {
+            var containerName = $(this.containerName).val();
+            var url = $(this).attr('action');
+            $.post(url, { "containerName": containerName }, function () {
+                document.location.href = "{{ app.request.baseUrl }}/blob/index/container";
+            });
+            console.log($(this));
+            $('#dialog').dialog('close');
+            return false;
+        });
+
+        $('a#addBlobLink').click(function() {
+            $('#dialog').dialog('open');
+            return false;
+        });
+
+        $('a#addContainerLink').click(function() {
+            $('#dialog').dialog('open');
+            return false;
+        });
+
+        $('.ui-icon-search').click(function () {
+            console.log($(this).attr('href'));
+            $('#preview').html('<img src="' + $(this).attr('href') + '" width="540"/>');
+            $('#preview').dialog('open');
+            return false;
+        });
+    });
+    //]]>
+    </script>
+{% endblock head %}
+
+{% block logout %}<a href="{{ app.request.baseUrl }}/logout" title="Termintate your session">Logout</a>{% endblock logout %}
+
+{% block content %}
+
+    <p>&gt;&nbsp;{% block navigation %}<a href="{{ app.request.baseUrl }}">Home</a>{% endblock navigation %}</p>
+
+{% block list %}
+    <p>No results found.</p>
+{% endblock list %}
+<div class="clear">&nbsp;</div>
+
+{% endblock content %}

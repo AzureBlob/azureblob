@@ -1,28 +1,26 @@
-azureblob
-=========
+# AzureBlob
 
-Sometimes you just need to browse your blob storage, therefor I created a simple PHP tool that just does that.
+## Introduction
 
-NOTE! requires the PEAR package WindowsAzure
+AzureBlob is a tool that allows you to manage blob storage containers and files on [Microsoft Azure Blob Storage]. It allows you to simply create and remove containers, upload, update or remove files for your [PHP](http://php.net) applications.
 
-```bash
-  channel-discover pear.windowsazure.com
-  pear install WindowsAzure/WindowsAzure-0.1.0
-```
+Simplicity is key, so we use [Silex](http://silex.sensiolabs.org) with [Twig](http://twig.sensiolabs.org) templates to provide a front-end. In the background we use a simple wrapper AzureBlob class that will proxy everything through to [WindowsAzure SDK for PHP](https://github.com/Azure/azure-sdk-for-php).
 
-Nicest thing is it stores nothing of your account, unless you check the "remember me" checkbox, so usabable for a more general audience ;-)
+All dependencies are loaded through [Composer](http://getcomposer.org).
 
-The following resources have been followed to achieve this application
+## Web Frontend
 
-* **Blob Storage Howto:** https://www.windowsazure.com/en-us/develop/php/how-to-guides/blob-service/
-* **Windows Azure Error Codes:** http://msdn.microsoft.com/en-us/library/windowsazure/dd179439.aspx
-* **Blob Storage Container ACL:** http://msdn.microsoft.com/en-us/library/windowsazure/dd179391.aspx
+You can try it out yourself by visiting [azureblob.azurewebsites.net](http://azureblob.azurewebsites.net). You need to have already an existing Azure Blob Storage configured on [Microsoft Azure]. If you're interested in trying it out, sign up for a free trial at [Microsoft Azure].
 
-I now implemented [Zend Framework](http://framework.zend.com) to have a clean framework for rendering the interfaces, while maintaining a clean API to access the Windows Azure Storage components.
+## Roadmap
 
-**NOTE**: I am still using the Windows Azure pear library as it is more up-to-date.
+- Implement proper validation
+- Implement Redis Caching for session data
 
-It uses the [Windows Azure SDK for PHP](https://github.com/WindowsAzure/azure-sdk-for-php) and some PEAR packages. See https://github.com/WindowsAzure/azure-sdk-for-php for more information.
-You can now test-drive this Windows Azure Blob Storage browser tool yourself at http://azureblob.phpdev.nu.
+## Licence
 
-Created by [DragonBe](https://github.com/DragonBe)
+This work is [MIT licenced](http://opensource.org/licenses/MIT). Please read the [LICENCE](LICENCE) for more details.
+
+
+[Microsoft Azure]: http://azure.microsoft.com
+[Microsoft Azure Blob Storage]: http://azure.microsoft.com/en-us/services/storage/

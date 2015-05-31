@@ -1,0 +1,24 @@
+{% extends 'browse.twig' %}
+
+{% block title %}List of storage containers{% endblock title %}
+{% block subtitle %}List storage containers{% endblock subtitle %}
+
+{% block list %}
+    <div id="addContainer" class="icon floatRight"><a id="addContainerLink" href="{{ app.request.baseUrl }}/storage/add-container" title="Add a new container to this storage"><span class="ui-icon ui-icon-circle-plus" style="display:inline-block;">+</span></a></div>
+
+    <div class="clear">&nbsp;</div>
+
+    <dl class="blobList">
+        <dt class="title large metro_blue_fg metro_black_bg">Container</dt>
+        <dd class="title small metro_blue_fg metro_black_bg">Last modified</dd>
+        <dd class="title metro_blue_fg metro_black_bg">Actions</dd>
+
+        {% for container in containers.getContainers %}
+            <dt class="data large"><a class="metro_white_fg" href="{{ app.request.baseUrl }}/storage/container/{{ container.getName }}" title="{{ container.getName }}">{{ container.getName }}</a></dt>
+            <dd class="data medium">{{ container.getProperties.getLastModified.format('Y-m-d H:i:s') }}</dd>
+            <dd class="data center"><a href="{{ app.request.baseUrl }}/storage/remove-container/{{ container.getName }}" title="Remove {{ container.getName }}" onClick="return confirm('Are you sure you want to delete {{ container.getName }}?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
+        {% endfor %}
+    </dl>
+{% endblock list %}
+
+{% block dialog %}<div id="dialog">{% include 'forms/container-form.twig' %}</div>{% endblock dialog %}

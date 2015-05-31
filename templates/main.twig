@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+        <head>
+            {% block head %}
+            <meta http-equiv="Content-type" content="text/html; Charset=UTF-8" />
+            <title>{% block title %}Windows Azure Storage Browser{% endblock title %} - AzureBlob</title>
+            <link href="{{ app.request.baseUrl }}/assets/css/main.css" media="screen" rel="stylesheet" type="text/css" />
+            {% endblock head %}
+        </head>
+
+    <body>
+    <div id="master">
+        <div id="header"><div id="topBar">
+                <div id="top">
+                    <span id="logo"><a href="{{ app.request.baseUrl }}/">{% block subtitle %}WASB{% endblock subtitle %}</a></span>
+                </div>
+                <div id="bottom">
+                    <div class="text-right" style="text-align: right">{% block logout %}{% endblock logout %}</div>
+                </div>
+            </div></div>
+        <div id="center">
+            <div class="content">
+
+                {% block content %}
+
+                <div id="splash" class="rounded"></div>
+                <div id="login">
+                    <div class="form">
+                        <h1>Sign in</h1>
+                        <form id="WindowsAzureAccount" name="signin" action="/index/auth" method="post">
+                            <dl id="azure_account_details">
+                                <dt><label for="account_name">Account name:</label></dt>
+                                <dd><input type="text" name="account_name" id="account_name" value=""></dd>
+                                <dt><label for="account_key">Primary key:</label></dt>
+                                <dd><input type="text" name="account_key" id="account_key" value=""></dd>
+                                <dt><label for="remember_me">Remember me:</label></dt>
+                                <dd><input type="checkbox" name="remember_me" id="remember_me" value="1" checked="checked"></dd>
+                                <dt>&nbsp;</dt>
+                                <dd><input type="submit" value="Sign in"></dd>
+                            </dl>
+                        </form>
+
+                        <h2>Privacy</h2>
+                        <p>You're credentials are not kept, only stored in a session for the duration of your
+                            visit on the site. When checking "remember me" a cookie is stored on your local computer
+                            with your account details.</p>
+                        <h2>Windows Azure</h2>
+                        <p>This service only works on <strong>Windows Azure Blob Storage</strong> accounts. You
+                            can always suggest new features on our
+                            <a href="http://github.com/PHPBenelux/azureblob/issues">Github issue list</a>.</p>
+                    </div>
+                </div>
+
+                {% endblock content %}
+
+                <div class="clear">&nbsp;</div>
+            </div>
+        </div>
+        <div class="clear">&nbsp;</div>
+        {% block footer %}
+            {% include 'footer.twig' %}
+        {% endblock footer %}
+        {% block dialog %}<div id="dialog"></div>{% endblock dialog %}
+    </div><!-- #master -->
+    </body>
+
+</html>
