@@ -1,0 +1,9 @@
+<form action="{{ app.request.basePath }}/storage/container/{{ container }}/upload" method="post" enctype="multipart/form-data">
+    <label> Your file:
+        <input type="file" name="rawfile">
+    </label><br>
+    <label> Prefix:
+        <input type="text" name="prefix" value="">
+    </label><br>
+    <input type="submit" value="Load up">
+</form>

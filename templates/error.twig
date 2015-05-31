@@ -1,0 +1,23 @@
+{% extends 'main.twig' %}
+
+{% block logout %}<a href="{{ app.request.baseUrl }}/logout" title="Termintate your session">Logout</a>{% endblock logout %}
+
+{% block title %}Something went wrong{% endblock title %}
+{% block subtitle %}Something went wrong{% endblock subtitle %}
+
+{% block content %}
+
+    <p>&gt;&nbsp;{% block navigation %}<a href="{{ app.request.baseUrl }}">Home</a>{% endblock navigation %}</p>
+
+{% block list %}
+    <p>{{ message }}</p>
+    <p><a href="{{ app.request.baseUrl }}/storage" title="Get back to the storage overview list">Back to storage overview</a>.</p>
+
+    {% if app.debug %}
+        <h2>Stack trace</h2>
+        <pre class="error">{{ trace }}</pre>
+    {% endif %}
+{% endblock list %}
+<div class="clear">&nbsp;</div>
+
+{% endblock content %}
