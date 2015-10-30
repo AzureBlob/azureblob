@@ -74,6 +74,12 @@ curl -sS https://getcomposer.org/installer | php
 # Deployment
 # ----------
 
+##################################################################################################################################
+# Dependency install
+# ----------
+# Invoke Composer in the deployment directory
+echo Invoking composer install in deployment directory $DEPLOYMENT_TARGET
+php -d extension=php_intl.dll $DEPLOYMENT_TARGET/composer.phar install -v --prefer-dist --no-dev --optimize-autoloader --no-interaction
 
 echo Handling Basic Web Site deployment.
 
@@ -92,13 +98,5 @@ if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
   "$POST_DEPLOYMENT_ACTION"
   exitWithMessageOnError "post deployment action failed"
 fi
-
-##################################################################################################################################
-# Dependency install
-# ----------
-
-# Invoke Composer in the deployment directory
-echo Invoking composer install in deployment directory $DEPLOYMENT_TARGET
-php -d extension=php_intl.dll $DEPLOYMENT_TARGET/composer.phar install -v --prefer-dist --no-dev --optimize-autoloader --no-interaction
 
 echo "Finished successfully."
