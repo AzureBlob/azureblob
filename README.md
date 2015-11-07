@@ -1,5 +1,9 @@
 # AzureBlob
 
+<a href="https://azuredeploy.net/?repository=https://github.com/AzureBlob/azureblob" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
 ## Introduction
 
 AzureBlob is a tool that allows you to manage blob storage containers and files on [Microsoft Azure Blob Storage]. It allows you to simply create and remove containers, upload, update or remove files for your [PHP](http://php.net) applications.
