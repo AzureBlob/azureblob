@@ -1,13 +1,14 @@
 <?php
 namespace AzureBlob;
 
+use MicrosoftAzure\Storage\Blob\Internal\IBlob;
+use MicrosoftAzure\Storage\Blob\Models\BlobBlockType;
+use MicrosoftAzure\Storage\Blob\Models\Block;
+use MicrosoftAzure\Storage\Blob\Models\CommitBlobBlocksOptions;
+use MicrosoftAzure\Storage\Blob\Models\ListBlobsResult;
+use MicrosoftAzure\Storage\Blob\Models\ListContainersResult;
 use WindowsAzure\Common\ServicesBuilder;
 use WindowsAzure\Common\ServiceException;
-use WindowsAzure\Blob\Models\Block;
-use WindowsAzure\Blob\Models\BlobBlockType;
-use WindowsAzure\Blob\Models\CommitBlobBlocksOptions;
-use WindowsAzure\Blob\Models\ListContainersResult;
-use WindowsAzure\Blob\Models\ListBlobsResult;
 
 class AzureBlob
 {
@@ -29,7 +30,7 @@ class AzureBlob
      */
     protected $accountKey;
     /**
-     * @var \WindowsAzure\Blob\Internal\IBlob The proxy interface to interact with
+     * @var IBlob The proxy interface to interact with
      * Microsoft Azure Blob Storage
      */
     protected $blobProxy;
@@ -123,7 +124,7 @@ class AzureBlob
     }
 
     /**
-     * @return \WindowsAzure\Blob\Internal\IBlob
+     * @return IBlob
      */
     public function getBlobProxy()
     {
@@ -134,7 +135,7 @@ class AzureBlob
     }
 
     /**
-     * @param \WindowsAzure\Blob\Internal\IBlob $blobProxy
+     * @param IBlob $blobProxy
      */
     public function setBlobProxy($blobProxy)
     {
@@ -232,7 +233,7 @@ class AzureBlob
 
         while (!feof($fh)) {
             $blockId = str_pad($counter, 6, "0", STR_PAD_LEFT);
-            $block = new Block;
+            $block = new Block();
             $block->setBlockId(base64_encode($blockId));
             $block->setType(BlobBlockType::UNCOMMITTED_TYPE);
             $blockIds[] = $block;
@@ -252,7 +253,7 @@ class AzureBlob
         $this->log('Completed upload of ' . $fileName . ' in ' . ($stop - $start) . ' seconds');
 
         $options = new CommitBlobBlocksOptions();
-        $options->setBlobContentType($fileType);
+        $options->setContentType($fileType);
         try {
             $this->getBlobProxy()->commitBlobBlocks($container, $fileName, $blockIds, $options);
             $this->log('Committing blob ' . $fileName . ' with total of ' . count($blockIds) . ' blocks');
