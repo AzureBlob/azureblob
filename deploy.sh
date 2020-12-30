@@ -75,7 +75,7 @@ curl -sS https://getcomposer.org/installer | php -- --1
 # ----------
 # Invoke Composer in the deployment directory
 echo Invoking composer install in deployment directory $DEPLOYMENT_SOURCE
-php -d extension=php_intl.dll $DEPLOYMENT_SOURCE/composer.phar install -v --prefer-dist --no-dev --optimize-autoloader --no-interaction
+php $DEPLOYMENT_SOURCE/composer.phar install -v --prefer-dist --no-dev --optimize-autoloader --no-interaction
 
 ##################################################################################################################################
 # Deployment
