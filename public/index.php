@@ -77,7 +77,9 @@ $app->post('/storage', function (Request $request, Response $response, array $ar
     if (1 === (int) $storageRemember) {
         setcookie('AZBLOB_ACC', base64_encode($storageName . '][' . $storageKey), time() + 2592000);
     }
-    $app->redirect('/storage', '/storage', 201);
+    return $response
+        ->withHeader('Location', '/storage')
+        ->withStatus(302);
 })
 ->setName('storagePost');
 
@@ -97,7 +99,9 @@ $app->post('/storage/add-container', function (Request $request, Response $respo
     } catch (ServiceException $e) {
         throw $e;
     }
-    $app->redirect('/storage/add-container', '/storage');
+    return $response
+        ->withHeader('Location', '/storage')
+        ->withStatus(302);
 });
 
 $app->get('/storage/add-container', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
@@ -106,7 +110,9 @@ $app->get('/storage/add-container', function (Request $request, Response $respon
 
 $app->get('/storage/remove-container/{container}', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
     $azureBlob->removeContainer($args['container']);
-    $app->redirect('/storage/remove-container/{container}', '/storage');
+    return $response
+        ->withHeader('Location', '/storage')
+        ->withStatus(302);
 });
 
 $app->get('/storage/container/{container}', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
@@ -133,14 +139,18 @@ $app->post('/storage/container/{container}/upload', function (Request $request, 
             );
         }
     }
-    $app->redirect('/storage/container/{container}/upload', '/storage/container/' . $args['container']);
+    return $response
+        ->withHeader('Location', '/storage/container/' . $args['container'])
+        ->withStatus(302);
 });
 
 $app->get('/storage/container/{container}/remove-blob', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
 
     $blob = urldecode($_GET['blob']);
     $azureBlob->removeBlob($args['container'], $blob);
-    $app->redirect('/storage/container/{container}/remove-blob', '/storage/container/' . $args['container']);
+    return $response
+        ->withHeader('Location', '/storage/container/' . $args['container'])
+        ->withStatus(302);
 });
 
 $app->get('/logout', function (Request $request, Response $response, array $args) use ($app) {
@@ -148,7 +158,9 @@ $app->get('/logout', function (Request $request, Response $response, array $args
         setcookie('AZBLOB_ACC', '', time() - 3600);
     }
     session_destroy();
-    $app->redirect('/logout', '/');
+    return $response
+        ->withHeader('Location', '/')
+        ->withStatus(302);
 });
 
 /*$app->error(function (\Exception $exception, $code) use ($app) {

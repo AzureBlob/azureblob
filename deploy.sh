@@ -68,7 +68,7 @@ fi
 # Download Composer
 # ----------
 echo Downloading Composer
-curl -sS https://getcomposer.org/installer | php
+curl -sS https://getcomposer.org/installer | php -- --1
 
 ##################################################################################################################################
 # Dependency install
