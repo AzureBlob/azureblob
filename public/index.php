@@ -1,189 +1,121 @@
 <?php
+declare(strict_types=1);
 
-use AzureBlob\AzureBlob;
+use AzureBlob\Controllers\ContainerController;
+use AzureBlob\Controllers\HomeController;
+use AzureBlob\Controllers\StorageController;
+use AzureBlob\Services\AzureBlobService;
+use AzureBlob\Utilities\CacheUtil;
+use AzureBlob\Utilities\CacheUtilityInterface;
+use DI\Bridge\Slim\Bridge;
 use DI\Container;
-use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
-use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
-use Slim\Factory\AppFactory;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Client as HttpClient;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use RKA\Middleware\IpAddress;
+use Slim\Handlers\Strategies\RequestResponseArgs;
+use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
+use Twig\Extension\DebugExtension;
+use Twig\TwigFilter;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 defined('AZBLOB_ENV') ||
     define('AZBLOB_ENV', (getenv('AZBLOB_ENV') ?: 'production'));
 
-ini_set('display_errors', 1);
-ini_set('post_max_size', '2G');
-ini_set('upload_max_filesize', '2G');
-ini_set('session.name', 'AZBLOBSID');
-ini_set('session.save_path', __DIR__ . '/../data/session');
-
+session_name('AZBLOBSID');
 session_start();
 
-//$predisParams = ['tcp://127.0.0.1?alias=master'];
-//$predisOptions = ['replication' => true];
-//$predis = new \Predis\Client($predisParams, $predisOptions);
-
-$container = new Container();
-AppFactory::setContainer($container);
-
-$container->set('view', function() {
-    return Twig::create(__DIR__ . '/../templates',
-        ['cache' => false]); //__DIR__ . '/../data/cache']);
-});
-
-$app = AppFactory::create();
-$app->add(TwigMiddleware::createFromContainer($app));
-$app->addRoutingMiddleware();
-
+// Monolog configuration and setup
+$logFile = sprintf('app_%s.log', date('Ym'));
+$logLevel = Logger::WARNING;
+$displayErrors = false;
 if ('production' !== AZBLOB_ENV) {
-    $errorMiddleware = $app->addErrorMiddleware(true, true, true);
+    $logLevel = Logger::DEBUG;
+    $displayErrors = true;
 }
+$logger = new Logger('app');
+$streamHandler = new StreamHandler(__DIR__ . '/../data/logs/' . $logFile, $logLevel);
+$logger->pushHandler($streamHandler);
 
-$azureBlob = new AzureBlob();
-if ([] !== $_SESSION) {
-    $azureBlob = new AzureBlob($_SESSION['AZBLOB_NAME'], $_SESSION['AZBLOB_KEY']);
+// Twig configuration
+$twigCache = __DIR__ . '/../data/cache';
+if ('production' !== AZBLOB_ENV) {
+    $twigCache = false;
 }
-
-/*$app->get('/', function (Request $request, Response $response, array $args) {
-    return $this->get('view')->render($response, 'home.twig', ['message' => 'hello']);
-});
-$app->run();
-die;*/
-
-$app->get('/', function (Request $request, Response $response, array $args) use ($app) {
-    if ([] !== $_COOKIE && isset($_COOKIE['AZBLOB_ACC'])) {
-        $token = base64_decode($_COOKIE['AZBLOB_ACC']);
-        $creds = explode('][', $token);
-        $_SESSION['AZBLOB_NAME'] = $creds[0];
-        $_SESSION['AZBLOB_KEY'] = $creds[1];
-        setcookie('AZBLOB_ACC', base64_encode($token), time() + 2592000);
-        $app->redirect('/', '/storage');
+$twig = Twig::create(__DIR__ . '/../templates', [
+    'cache' => false, //$twigCache,
+]);
+$twig->addExtension(new DebugExtension());
+$shortString = new TwigFilter('short', function ($string) {
+    $maxLenght = 25;
+    if($maxLenght > strlen($string)) {
+        return $string;
     }
-    return $this->get('view')->render($response, 'home.twig', ['message' => 'hello']);
-})
-->setName('home');
-
-$app->post('/storage', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    $params = (array) $request->getParsedBody();
-    $storageName = $params['account_name'];
-    $storageKey = $params['account_key'];
-    $storageRemember = $params['remember_me'];
-    $_SESSION['AZBLOB_NAME'] = $storageName;
-    $_SESSION['AZBLOB_KEY'] = $storageKey;
-    if (1 === (int) $storageRemember) {
-        setcookie('AZBLOB_ACC', base64_encode($storageName . '][' . $storageKey), time() + 2592000);
-    }
-    return $response
-        ->withHeader('Location', '/storage')
-        ->withStatus(302);
-})
-->setName('storagePost');
-
-$app->get('/storage', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    $result = $azureBlob->listContainers();
-    return $this->get('view')->render($response, 'containers.twig', ['containers' => $result]);
-})
-->setName('storage');
-
-$app->post('/storage/add-container', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    $params = (array) $request->getParsedBody();
-    $container = $params['container'];
-    $options = new CreateContainerOptions();
-    $options->setPublicAccess('blob');
-    try {
-        $azureBlob->createContainer($container, $options);
-    } catch (ServiceException $e) {
-        throw $e;
-    }
-    return $response
-        ->withHeader('Location', '/storage')
-        ->withStatus(302);
+    return substr($string, 0, $maxLenght) . '...';
 });
+$twig->getEnvironment()->addFilter($shortString);
 
-$app->get('/storage/add-container', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    return $this->get('view')->render($response, 'container.twig');
+// Slim configuration and setup
+$diContainer = new Container();
+$diContainer->set(Logger::class, $logger);
+$diContainer->set(HttpClient::class, new HttpClient);
+$diContainer->set(CacheUtilityInterface::class, new CacheUtil(
+    __DIR__ . '/../data/cache',
+    600
+));
+$diContainer->set(AzureBlobService::class, new AzureBlobService());
+$diContainer->set(HomeController::class, new HomeController($logger));
+$diContainer->set(ContainerController::class, new ContainerController(
+    $diContainer->get(AzureBlobService::class),
+    $diContainer->get(Logger::class),
+    $diContainer->get(CacheUtilityInterface::class)
+));
+
+$app = Bridge::create($diContainer);
+
+// Route strategy definition
+$routeCollector = $app->getRouteCollector();
+$routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
+
+// Middleware configuration
+$app->add(TwigMiddleware::create($app, $twig));
+$app->addRoutingMiddleware();
+$app->add(new IpAddress());
+$errorMiddleware = $app->addErrorMiddleware($displayErrors, true, true, $logger);
+
+$app->get('/', [HomeController::class, 'getHome'])->setName('home');
+$app->get('/logout', [HomeController::class, 'logout'])->setName('logout');
+$app->group('/storage', function (RouteCollectorProxy $storage) {
+   $storage
+       ->post('', [StorageController::class, 'postSettings'])
+       ->setName('post-settings');
+   $storage
+       ->get('', [StorageController::class, 'getContainerListing'])
+       ->setName('container-listing');
+   $storage
+       ->get('/add-container', [StorageController::class, 'addContainer'])
+       ->setName('add-container');
+   $storage
+       ->post('/add-container', [StorageController::class, 'createContainer'])
+       ->setName('create-container');
+   $storage
+       ->get('/remove-container/{name}', [StorageController::class, 'removeContainer'])
+       ->setName('remove-container');
+
+   $storage->group('/container', function (RouteCollectorProxy $container) {
+       $container
+           ->get('/{name}', [ContainerController::class, 'getBlobListing'])
+           ->setName('blob-listing');
+       $container
+           ->post('/{name}/upload', [ContainerController::class, 'uploadBlob'])
+           ->setName('blob-upload');
+       $container
+           ->get('/{name}/remove-blob', [ContainerController::class, 'removeBlob'])
+           ->setName('blob-remove');
+   });
 });
-
-$app->get('/storage/remove-container/{container}', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    $azureBlob->removeContainer($args['container']);
-    return $response
-        ->withHeader('Location', '/storage')
-        ->withStatus(302);
-});
-
-$app->get('/storage/container/{container}', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    $result = $azureBlob->listBlobs($args['container']);
-    return $this->get('view')->render($response, 'blobs.twig',
-        ['blobs' => $result, 'ab' => $azureBlob, 'container' => $args['container']]
-    );
-});
-
-$app->get('/storage/container/{container}/add-blob', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    return $this->get('view')->render($response, 'blob.twig', ['container' => $args['container']]);
-});
-
-$app->post('/storage/container/{container}/upload', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-    $prefix = (isset($_POST['prefix']) && '' !== $_POST['prefix'] ? $_POST['prefix'] : null);
-    if ([] !== $_FILES) {
-        if (is_uploaded_file($_FILES['rawfile']['tmp_name'])) {
-            $azureBlob->uploadFile(
-                $args['container'],
-                $_FILES['rawfile']['tmp_name'],
-                $_FILES['rawfile']['type'],
-                $_FILES['rawfile']['name'],
-                $prefix
-            );
-        }
-    }
-    return $response
-        ->withHeader('Location', '/storage/container/' . $args['container'])
-        ->withStatus(302);
-});
-
-$app->get('/storage/container/{container}/remove-blob', function (Request $request, Response $response, array $args) use ($app, $azureBlob) {
-
-    $blob = urldecode($_GET['blob']);
-    $azureBlob->removeBlob($args['container'], $blob);
-    return $response
-        ->withHeader('Location', '/storage/container/' . $args['container'])
-        ->withStatus(302);
-});
-
-$app->get('/logout', function (Request $request, Response $response, array $args) use ($app) {
-    if ([] !== $_COOKIE && isset($_COOKIE['AZBLOB_ACC'])) {
-        setcookie('AZBLOB_ACC', '', time() - 3600);
-    }
-    session_destroy();
-    return $response
-        ->withHeader('Location', '/')
-        ->withStatus(302);
-});
-
-/*$app->error(function (\Exception $exception, $code) use ($app) {
-//    var_dump($exception->getCode());die;
-    switch ($code) {
-        case 404:
-            $message = 'Requested page could not be found';
-            break;
-        case 500:
-            if (409 === $exception->getCode()) {
-                $message = 'The specified container already exists.';
-            } else {
-                $message = 'Our chaos monkey was not prepared for this';
-            }
-            break;
-        default:
-            $message = $exception->getMessage();
-            break;
-    }
-    return $this->get('view')->render($response, 'error.twig', [
-        'message' => $message,
-        'trace' => $exception->getTraceAsString(),
-    ]);
-});*/
 
 $app->run();
