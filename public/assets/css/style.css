@@ -1,11 +1,16 @@
 /** setting the font face for azure websites **/
-@font-face { font-family: "Segoe UI"; src: local("Segoe UI"), url('http://az213233.vo.msecnd.net/Content/Fonts/segoeui.ttf'); }
-@font-face { font-family: "Segoe UI Semibold"; src: local("Segoe UI Semibold"), url('http://az213233.vo.msecnd.net/Content/Fonts/seguisb.ttf'); }
-@font-face { font-family: "Segoe UI Light"; src: local("Segoe UI Light"), url('http://az213233.vo.msecnd.net/Content/Fonts/segoeuil.ttf'); }
+/** setting the font face for azure websites **/
+@font-face {  font-family: "Segoe UI";  src: local("Segoe UI"), url("/assets/fonts/segoeui.ttf") format("truetype"); }
+@font-face { font-family: "Segoe UI Semibold"; src: local("Segoe UI Semibold"), url("/assets/fonts/seguisb.ttf") format("truetype"); }
+@font-face { font-family: "Segoe UI Light"; src: local("Segoe UI Light"), url("/assets/fonts/segoeuil.ttf") format("truetype"); }
 
 * { margin: 0; padding: 0; }
 
-body { font-family: "Segoe UI", sans-serif; text-align: center; background: white; }
+body {
+    font-family: "Segoe UI", Helvetica, Arial, "sans-serif";
+    text-align: center;
+    background: white;
+}
 a { text-decoration: none; color: black; }
 
 #master { width: 1000px; text-align: left; margin: 0 auto; }

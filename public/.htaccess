@@ -1,10 +1,4 @@
-<IfModule mod_rewrite.c>
-    Options -MultiViews
-
-    RewriteEngine On
-    #RewriteBase /azureblob2/public
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [QSA,L]
-</IfModule>
-
-SetEnv AZBLOB_ENV development
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
