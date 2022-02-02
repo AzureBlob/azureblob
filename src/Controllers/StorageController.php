@@ -51,7 +51,7 @@ final class StorageController
             $this->azureBlobService->addBlobContainer($containerName);
         }
         return $response
-            ->withHeader('Location', sprintf('/storage/container/%s', $containerName))
+            ->withHeader('Location', sprintf('/storage/container/%s', strtolower($containerName)))
             ->withStatus(302);
     }
 
