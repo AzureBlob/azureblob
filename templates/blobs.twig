@@ -14,20 +14,25 @@
     <div class="clear">&nbsp;</div>
 
     <dl class="blobList">
-        <dt class="title medium metro_blue_fg metro_black_bg">File</dt>
-        <dd class="title large metro_blue_fg metro_black_bg">Location</dd>
+        <dt class="title slarge metro_blue_fg metro_black_bg">File</dt>
+        <dd class="title slarge metro_blue_fg metro_black_bg">Location</dd>
         <dd class="title medium metro_blue_fg metro_black_bg">Content-type</dd>
         <dd class="title medium metro_blue_fg metro_black_bg">Last modified</dd>
-        <dd class="title small metro_blue_fg metro_black_bg">Actions</dd>
+        <dd class="title slarge metro_blue_fg metro_black_bg">Actions</dd>
 
         {% for blob in blobs.getBlobs %}
-            <dt class="data medium">{{ blob.getName|short }}</dt>
-            <dd class="data large"><a href="{{ blob.getUrl }}" title="{{ blob.getUrl|e }}" target="_blank">{{ blob.getUrl|short }}</a></dd>
+            <dt class="data slarge">{{ blob.getName|short }}</dt>
+            <dd class="data slarge"><a href="{{ blob.getUrl }}" title="{{ blob.getUrl|e }}" target="_blank">{{ blob.getUrl|short }}</a></dd>
             <dd class="data medium">{{ blob.getProperties.getContentType|e }}</dd>
             <dd class="data medium">{{ blob.getProperties.getLastModified.format('Y-m-d H:i')|e }}</dd>
-            <dd class="data small">
+            <dd class="data slarge">
                 <a href="{{ app.request.baseUrl }}/storage/container/{{ container }}/remove-blob?blob={{ blob.getName|url_encode }}" title="Remove {{ blob.getName|e }}" onClick="return confirm('Are you sure you want to delete {{ blob.getName|e }}?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a>
                 <a href="{{ blob.getUrl }}" class="ui-icon ui-icon-search" style="display: inline-block">o</a>
+                {% if blob.getProperties.getServerEncrypted %}
+                    <span class="ui-icon ui-icon-locked" title="Encrypted" style="display: inline-block"></span>
+                {% else %}
+                    <span class="ui-icon ui-icon-unlocked" title="Not encrypted" style="display: inline-block"></span>
+                {% endif %}
             </dd>
         {% endfor %}
 
