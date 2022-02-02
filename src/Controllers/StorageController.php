@@ -20,18 +20,6 @@ final class StorageController
         $this->azureBlobService = $azureBlobService;
     }
 
-    public function postSettings(Request $request, Response $response, array $args = []): Response
-    {
-        $postData = (array) $request->getParsedBody();
-        $accountName = $postData['account_name'] ?? '';
-        $accountKey = $postData['account_key'] ?? '';
-        $_SESSION['az_account_name'] = base64_encode($accountName);
-        $_SESSION['az_account_key'] = base64_encode($accountKey);
-        return $response
-            ->withHeader('Location', '/storage')
-            ->withStatus(302);
-    }
-
     public function getContainerListing(Request $request, Response $response, array $args = []): Response
     {
         $this->azureBlobService->createBlobClient(

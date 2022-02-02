@@ -4,6 +4,7 @@ declare(strict_types=1);
 use AzureBlob\Controllers\ContainerController;
 use AzureBlob\Controllers\HomeController;
 use AzureBlob\Controllers\StorageController;
+use AzureBlob\Middleware\AuthMiddleware;
 use AzureBlob\Services\AzureBlobService;
 use AzureBlob\Utilities\CacheUtil;
 use AzureBlob\Utilities\CacheUtilityInterface;
@@ -66,6 +67,9 @@ $diContainer->set(CacheUtilityInterface::class, new CacheUtil(
     __DIR__ . '/../data/cache',
     600
 ));
+$diContainer->set(AuthMiddleware::class, new AuthMiddleware(
+    $diContainer->get(Logger::class))
+);
 $diContainer->set(AzureBlobService::class, new AzureBlobService());
 $diContainer->set(HomeController::class, new HomeController($logger));
 $diContainer->set(ContainerController::class, new ContainerController(
@@ -84,14 +88,13 @@ $routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
 $app->add(TwigMiddleware::create($app, $twig));
 $app->addRoutingMiddleware();
 $app->add(new IpAddress());
+$app->add($diContainer->get(AuthMiddleware::class));
 $errorMiddleware = $app->addErrorMiddleware($displayErrors, true, true, $logger);
 
 $app->get('/', [HomeController::class, 'getHome'])->setName('home');
+$app->post('/login', [HomeController::class, 'postSettings'])->setName('login');
 $app->get('/logout', [HomeController::class, 'logout'])->setName('logout');
-$app->group('/storage', function (RouteCollectorProxy $storage) {
-   $storage
-       ->post('', [StorageController::class, 'postSettings'])
-       ->setName('post-settings');
+$app->group('/storage', function (RouteCollectorProxy $storage) use ($diContainer) {
    $storage
        ->get('', [StorageController::class, 'getContainerListing'])
        ->setName('container-listing');
@@ -105,7 +108,7 @@ $app->group('/storage', function (RouteCollectorProxy $storage) {
        ->get('/remove-container/{name}', [StorageController::class, 'removeContainer'])
        ->setName('remove-container');
 
-   $storage->group('/container', function (RouteCollectorProxy $container) {
+   $storage->group('/container', function (RouteCollectorProxy $container) use ($diContainer) {
        $container
            ->get('/{name}', [ContainerController::class, 'getBlobListing'])
            ->setName('blob-listing');
@@ -115,7 +118,7 @@ $app->group('/storage', function (RouteCollectorProxy $storage) {
        $container
            ->get('/{name}/remove-blob', [ContainerController::class, 'removeBlob'])
            ->setName('blob-remove');
-   });
-});
+   })->add($diContainer->get(AuthMiddleware::class));
+})->add($diContainer->get(AuthMiddleware::class));
 
 $app->run();
