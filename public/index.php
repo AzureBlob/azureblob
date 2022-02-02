@@ -71,7 +71,10 @@ $diContainer->set(AuthMiddleware::class, new AuthMiddleware(
     $diContainer->get(Logger::class))
 );
 $diContainer->set(AzureBlobService::class, new AzureBlobService());
-$diContainer->set(HomeController::class, new HomeController($logger));
+$diContainer->set(HomeController::class, new HomeController(
+    $diContainer->get(Logger::class),
+    $diContainer->get(AzureBlobService::class)
+));
 $diContainer->set(ContainerController::class, new ContainerController(
     $diContainer->get(AzureBlobService::class),
     $diContainer->get(Logger::class),

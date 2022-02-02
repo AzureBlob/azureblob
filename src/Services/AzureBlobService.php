@@ -24,6 +24,7 @@ final class AzureBlobService
 {
     public const ENDPOINT_PROTO_HTTP = 'http';
     public const ENDPOINT_PROTO_HTTPS = 'https';
+    public const REMEMBER_COOKIE_NAME = 'azblob_account';
 
     /**
      * @var BlobRestProxy The client used to access the blob storage
@@ -94,5 +95,24 @@ final class AzureBlobService
     {
         $this->blobClient->deleteBlob($containerName, $blobName);
         return true;
+    }
+
+    public function setRememberMeCookie(string $accountName, string $accountKey): bool
+    {
+        $accountHash = base64_encode(sprintf('%s:%s', $accountName, $accountKey));
+        return setcookie(self::REMEMBER_COOKIE_NAME, $accountHash, [
+            'expires' => time() + 60 * 60 * 24 * 356,
+            'path' => '/',
+            'domain' => $_SERVER['SERVER_NAME'],
+            'secure' => isset($_SERVER['HTTPS']),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+    }
+
+    public function startSession(string $accountName, string $accountKey): void
+    {
+        $_SESSION['az_account_name'] = base64_encode($accountName);
+        $_SESSION['az_account_key'] = base64_encode($accountKey);
     }
 }

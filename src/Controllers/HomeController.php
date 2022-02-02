@@ -2,6 +2,7 @@
 
 namespace AzureBlob\Controllers;
 
+use AzureBlob\Services\AzureBlobService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
@@ -10,13 +11,16 @@ use Slim\Views\Twig;
 final class HomeController
 {
     private LoggerInterface $logger;
+    private AzureBlobService $blobService;
 
     /**
      * @param LoggerInterface $logger
+     * @param AzureBlobService $blobService
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, AzureBlobService $blobService)
     {
         $this->logger = $logger;
+        $this->blobService = $blobService;
     }
 
     /**
@@ -36,6 +40,14 @@ final class HomeController
             'User with IP %s accessed the homepage',
             $request->getAttribute('ip_address')
         ));
+        if ([] !== $_COOKIE && isset($_COOKIE[AzureBlobService::REMEMBER_COOKIE_NAME])) {
+            $accountHash = base64_decode($_COOKIE[AzureBlobService::REMEMBER_COOKIE_NAME]);
+            list ($accountName, $accountKey) = explode(':', $accountHash);
+            $this->blobService->startSession($accountName, $accountKey);
+            return $response
+                ->withHeader('Location', '/storage')
+                ->withStatus(302);
+        }
         $view = Twig::fromRequest($request);
         return $view->render($response, 'home.twig');
     }
@@ -45,8 +57,12 @@ final class HomeController
         $postData = (array) $request->getParsedBody();
         $accountName = $postData['account_name'] ?? '';
         $accountKey = $postData['account_key'] ?? '';
-        $_SESSION['az_account_name'] = base64_encode($accountName);
-        $_SESSION['az_account_key'] = base64_encode($accountKey);
+        $rememberMe = $postData['remember_me'] ?? '0';
+        $this->blobService->startSession($accountName, $accountKey);
+        $result = false;
+        if (1 === intval($rememberMe)) {
+            $result = $this->blobService->setRememberMeCookie($accountName, $accountKey);
+        }
         return $response
             ->withHeader('Location', '/storage')
             ->withStatus(302);
