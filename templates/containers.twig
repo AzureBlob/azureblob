@@ -10,13 +10,17 @@
 
     <dl class="blobList">
         <dt class="title large metro_blue_fg metro_black_bg">Container</dt>
-        <dd class="title small metro_blue_fg metro_black_bg">Last modified</dd>
-        <dd class="title metro_blue_fg metro_black_bg">Actions</dd>
+        <dd class="title large metro_blue_fg metro_black_bg">Last modified</dd>
+        <dd class="title medium metro_blue_fg metro_black_bg">Public Access</dd>
+        <dd class="title medium metro_blue_fg metro_black_bg">Status</dd>
+        <dd class="title small metro_blue_fg metro_black_bg">Actions</dd>
 
         {% for container in containers.getContainers %}
             <dt class="data large"><a class="metro_white_fg" href="{{ app.request.baseUrl }}/storage/container/{{ container.getName }}" title="{{ container.getName }}">{{ container.getName }}</a></dt>
-            <dd class="data medium">{{ container.getProperties.getLastModified.format('Y-m-d H:i:s') }}</dd>
-            <dd class="data center"><a href="{{ app.request.baseUrl }}/storage/remove-container/{{ container.getName }}" title="Remove {{ container.getName }}" onClick="return confirm('Are you sure you want to delete {{ container.getName }}?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
+            <dd class="data large">{{ container.getProperties.getLastModified.format('Y-m-d H:i:s') }}</dd>
+            <dd class="data medium">{{ container.getProperties.getPublicAccess }}</dd>
+            <dd class="data medium">{{ container.getProperties.getLeaseStatus }}</dd>
+            <dd class="data small"><a href="{{ app.request.baseUrl }}/storage/remove-container/{{ container.getName }}" title="Remove {{ container.getName }}" onClick="return confirm('Are you sure you want to delete {{ container.getName }}?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
         {% endfor %}
     </dl>
 {% endblock list %}

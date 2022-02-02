@@ -89,8 +89,8 @@ dl.blobList dt { float: left; clear: left; width: 260px;padding:10px 20px;}
 dl.blobList dt.data { background: #71B1D1; color: white;}
 dl.blobList dd { float: left; padding: 10px 20px;}
 dl.blobList dd a:hover { background-color: #71B1D1; color: white; }
-dl.blobList dd.small { width: 140px; }
-dl.blobList dd.medium { width: 180px; }
-dl.blobList dd.large { width: 260px; }
+dl.blobList dd.small { width: 50px; }
+dl.blobList dd.medium { width: 120px; }
+dl.blobList dd.large { width: 210px; }
 dl.blobList dd.data { font-family: "Segoe UI Light";}
 dl.blobList dt.title dl.blobList dd.title { font-weight: bold; font-family: "Segoe UI Semibold"; }
