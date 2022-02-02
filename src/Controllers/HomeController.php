@@ -73,6 +73,7 @@ final class HomeController
         unset($_SESSION['az_account_name']);
         unset($_SESSION['az_account_key']);
         session_destroy();
+        $this->blobService->removeRememberMeCookie();
         return $response
             ->withHeader('Location', '/')
             ->withStatus(302);
