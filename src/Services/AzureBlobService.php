@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AzureBlob\Services;
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+use MicrosoftAzure\Storage\Blob\Models\ContainerACL;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlobBlockOptions;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlobOptions;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsResult;
@@ -25,6 +26,9 @@ final class AzureBlobService
     public const ENDPOINT_PROTO_HTTP = 'http';
     public const ENDPOINT_PROTO_HTTPS = 'https';
     public const REMEMBER_COOKIE_NAME = 'azblob_account';
+    public const ACL_NONE = '';
+    public const ACL_CONTAINER = 'container';
+    public const ACL_BLOB = 'blob';
 
     /**
      * @var BlobRestProxy The client used to access the blob storage
@@ -56,7 +60,27 @@ final class AzureBlobService
 
     public function removeBlobContainer(string $containerName): bool
     {
-        $this->blobClient->deleteContainer($containerName);
+        $this->blobClient->deleteContainer(strtolower($containerName));
+        return true;
+    }
+
+    public function getBlobContainerAcl(string $containerName): ?string
+    {
+        $containerAcl = $this->blobClient->getContainerAcl($containerName);
+        return $containerAcl->getContainerAcl()->getPublicAccess();
+    }
+
+    public function setBlobContainerAcl(string $containerName, string $acl = self::ACL_BLOB): bool
+    {
+        if (! in_array($acl, [self::ACL_NONE, self::ACL_BLOB, self::ACL_CONTAINER])) {
+            return false;
+        }
+        $blobAcl = new ContainerACL();
+        $blobAcl->setPublicAccess($acl);
+        $this->blobClient->setContainerAcl(
+            strtolower($containerName),
+            $blobAcl
+        );
         return true;
     }
 

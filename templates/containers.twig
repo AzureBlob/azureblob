@@ -18,7 +18,7 @@
         {% for container in containers.getContainers %}
             <dt class="data large"><a class="metro_white_fg" href="{{ app.request.baseUrl }}/storage/container/{{ container.getName }}" title="{{ container.getName }}">{{ container.getName }}</a></dt>
             <dd class="data large">{{ container.getProperties.getLastModified.format('Y-m-d H:i:s') }}</dd>
-            <dd class="data medium">{{ container.getProperties.getPublicAccess }}</dd>
+            <dd class="data medium"><a href="/storage/acl/{{ container.getName }}">{{ container.getProperties.getPublicAccess|default('No access') }}</a></dd>
             <dd class="data medium">{{ container.getProperties.getLeaseStatus }}</dd>
             <dd class="data small"><a href="{{ app.request.baseUrl }}/storage/remove-container/{{ container.getName }}" title="Remove {{ container.getName }}" onClick="return confirm('Are you sure you want to delete {{ container.getName }}?');"><span class="ui-icon ui-icon-circle-minus" style="display: inline-block">-</span></a></dd>
         {% endfor %}

@@ -96,3 +96,10 @@ dl.blobList dd.slarge { width: 180px; }
 dl.blobList dd.large { width: 210px; }
 dl.blobList dd.data { font-family: "Segoe UI Light";}
 dl.blobList dt.title dl.blobList dd.title { font-weight: bold; font-family: "Segoe UI Semibold"; }
+
+.form-title { margin-top: 15px; padding: 10px 20px; font-weight: bold; font-family: "Segoe UI Semibold"; }
+.form-block { padding-top: 15px; }
+.form-label { padding: 20px; font-family: "Segoe UI Light"; }
+.form-group { margin-bottom: 10px; }
+.form-button { border: 1px solid #222222; width: 4em; padding: 0.4em; color: #222222; background: #71B1D1; font-family: "Segoe UI Semibold"; font-size: medium; font-weight: bold; }
+.form-button:hover { border: 1px solid #71B1D1; color: #71B1D1; background: #222222; cursor: pointer;}
