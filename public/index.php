@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use AzureBlob\Controllers\AclController;
 use AzureBlob\Controllers\ContainerController;
 use AzureBlob\Controllers\HomeController;
 use AzureBlob\Controllers\StorageController;
@@ -75,6 +76,10 @@ $diContainer->set(HomeController::class, new HomeController(
     $diContainer->get(Logger::class),
     $diContainer->get(AzureBlobService::class)
 ));
+$diContainer->set(AclController::class, new AclController(
+    $diContainer->get(AzureBlobService::class),
+    $diContainer->get(Logger::class)
+));
 $diContainer->set(ContainerController::class, new ContainerController(
     $diContainer->get(AzureBlobService::class),
     $diContainer->get(Logger::class),
@@ -110,6 +115,11 @@ $app->group('/storage', function (RouteCollectorProxy $storage) use ($diContaine
    $storage
        ->get('/remove-container/{name}', [StorageController::class, 'removeContainer'])
        ->setName('remove-container');
+
+   $storage->group('/acl', function (RouteCollectorProxy $acl) use ($diContainer) {
+       $acl->get('/{name}', [AclController::class, 'getAcl'])->setName('acl-container');
+       $acl->post('/{name}', [AclController::class, 'setAcl'])->setName('acl-container-set');
+   })->add($diContainer->get(AuthMiddleware::class));
 
    $storage->group('/container', function (RouteCollectorProxy $container) use ($diContainer) {
        $container

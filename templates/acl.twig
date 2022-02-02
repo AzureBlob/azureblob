@@ -1,0 +1,21 @@
+{% extends 'browse.twig' %}
+
+{% block title %}ACL for container {{ container }}{% endblock title %}
+{% block subtitle %}ACL for container {{ container }}{% endblock subtitle %}
+
+{% block list %}
+    <div class="form-title metro_black_bg metro_blue_fg">ACL for container {{ container }}</div>
+    <form class="form form-block" method="post" action="/storage/acl/{{ container }}">
+        <div class="form-group">
+
+            <label class="form-label"><input type="radio" name="acl" value="" {% if null == acl %}checked="checked"{% endif %}> No access</label>
+            <label class="form-label"><input type="radio" name="acl" value="container" {% if 'container' == acl %}checked="checked"{% endif %}> Container</label>
+            <label class="form-label"><input type="radio" name="acl" value="blob" {% if 'blob' == acl %}checked="checked"{% endif %}> Blob</label>
+
+        </div>
+        <input class="form-button" type="submit" value="Set">
+        <a href="/storage">Cancel</a>
+    </form>
+{% endblock list %}
+
+{% block dialog %}</div>{% endblock dialog %}
