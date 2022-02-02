@@ -110,6 +110,18 @@ final class AzureBlobService
         ]);
     }
 
+    public function removeRememberMeCookie(): bool
+    {
+        return setcookie(self::REMEMBER_COOKIE_NAME, '', [
+            'expires' => 0,
+            'path' => '/',
+            'domain' => $_SERVER['SERVER_NAME'],
+            'secure' => isset($_SERVER['HTTPS']),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+    }
+
     public function startSession(string $accountName, string $accountKey): void
     {
         $_SESSION['az_account_name'] = base64_encode($accountName);
